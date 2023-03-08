@@ -9,11 +9,16 @@ namespace PN.Logic
     public class Truck
     {
         private int TruckId { get; set; }
-        private string TruckName { get; set;}
-        public Truck(int truckId, string truckName)
+        private string Name { get; set;}
+        public Truck(int truckId, string name)
         {
             TruckId = truckId;
-            TruckName = truckName;
+            Name = name;
         }
+        public override string ToString()
+        {
+            return $"{TruckId}  {Name}";
+        }
+
     }
 }

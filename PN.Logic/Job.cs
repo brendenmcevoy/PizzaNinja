@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace PN.Logic
 {
-    public class Task
+    public class Job
     {
-        private int TaskId { get; set; }    
+        private int JobId { get; set; }    
         private string Name { get; set; }
         private string Description { get; set; }
-        public Task(int taskId, string name, string description)
+        public Job(int jobId, string name, string description)
         {
-            TaskId = taskId;
+            JobId = jobId;
             Name = name;
             Description = description;
         }

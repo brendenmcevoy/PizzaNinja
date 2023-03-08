@@ -74,7 +74,14 @@
                   BorderThickness="1"
                   BorderBrush="Transparent"
                   Background="Transparent"
-                  Foreground="Transparent"/>
+                  Foreground="Transparent"
+                  ItemsSource="{Binding Truck}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding TruckId}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
         <DataGrid x:Name="WeeklyTasks"
                   Grid.Row="2"
                   Grid.RowSpan="2"
