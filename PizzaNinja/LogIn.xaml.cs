@@ -24,6 +24,9 @@ namespace PizzaNinja
         }
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
+            EmployeeUI employeeUI = new EmployeeUI();
+            employeeUI.Show();
+            this.Close();
 
         }
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)

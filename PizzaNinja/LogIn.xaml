@@ -5,7 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PizzaNinja"
         mc:Ignorable="d"
-        Title="LogIn" Height="400" Width="650" WindowStyle="None" ResizeMode="NoResize" MouseDown="Window_MouseDown">
+        Title="LogIn" Height="400" Width="650" 
+        WindowStartupLocation="CenterScreen" 
+        WindowStyle="None" ResizeMode="NoResize"
+        MouseDown="Window_MouseDown">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100"/>
@@ -29,6 +32,8 @@
                 Content="X"
                 FontFamily="Verdana"
                 FontWeight="Bold"
+                Background="Transparent"
+                BorderBrush="Transparent"
                 Click="CloseButton_Click"/>
         <Button x:Name="MinimizeButton"
                 Grid.Column="4"
@@ -38,6 +43,8 @@
                 Content="-"
                 FontFamily="Verdana"
                 FontWeight="Bold"
+                Background="Transparent"
+                BorderBrush="Transparent"
                 Click="MinimizeButton_Click"/>
         <StackPanel Grid.Column="2" Grid.Row="2">
             <Image Source="/Images/Logo.jpg"
