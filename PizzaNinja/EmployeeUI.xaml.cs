@@ -28,16 +28,15 @@ namespace PizzaNinja
     {
         private IConnectionFactory conn;
         private UnitOfWork uow;
-        ObservableCollection<Truck> trucks;
-        //List<Job> jobs;
-        public EmployeeUI()
+        private Employee _employee;
+        private ObservableCollection<Truck> trucks;
+        public EmployeeUI(Employee employee)
         {
             conn = new DatabaseConnectionFactory();
             uow = new UnitOfWork(conn);
+            _employee = employee;
             InitializeComponent();
             trucks = new ObservableCollection<Truck>();
-            //jobs = new List<Job>();
-            //WeeklyTasks.ItemsSource = jobs;
             TruckBox.ItemsSource = trucks;
         }
 
@@ -61,7 +60,7 @@ namespace PizzaNinja
         private void JobButton_Click(object sender, RoutedEventArgs e)
         {
             Job job = (Job)JobsDisplay.SelectedItem;
-            JobsUI jobsUi = new JobsUI(job);
+            JobsUI jobsUi = new JobsUI(job,_employee);
             jobsUi.Show();  
         }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)

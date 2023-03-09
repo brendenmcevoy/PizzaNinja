@@ -17,10 +17,12 @@ namespace PN.DB.UOW
             Jobs = new JobRepository<Job>(Conn);
             Employees = new EmployeeRepository<Employee>(Conn);
             Trucks = new TruckRepository<Truck>(Conn);
+            CompletedJobs = new CompletedJobRepository<CompletedJob>(Conn);
         }
 
         public IJobRepository<Job> Jobs { get; private set; }
         public IEmployeeRepository<Employee> Employees { get; private set; }
         public ITruckRepository<Truck> Trucks { get; private set; }
+        public ICompledJobRepository<CompletedJob> CompletedJobs { get; private set; }
     }
 }

@@ -21,10 +21,15 @@ namespace PN.DB.Repository
         {
             throw new NotImplementedException();
         }
-
-        public Task<int> DeleteAsync(int id)
+        public async Task<int> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            using (var connection = _connectionFactory.GetConnection)
+            {
+                var sql = "DELETE FROM Jobs WHERE JobId = @JobId";
+                connection.Open();
+                var result = await Task.Run(() => connection.ExecuteAsync(sql, new { JobId = id }));
+                return result;
+            }
         }
 
         public async Task<List<Job>> GetAllAsync()

@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using PN.DB.Interfaces;
+using PN.DB.UOW;
 using PN.Logic;
 
 namespace PizzaNinja
@@ -21,12 +23,19 @@ namespace PizzaNinja
     public partial class JobsUI : Window
     {
         private Job _job;
-        public JobsUI(Job job)
+        private Employee _employee;
+        private IConnectionFactory conn;
+        private UnitOfWork uow;
+        public JobsUI(Job job,Employee employee)
         {
             _job = job;
+            _employee = employee;
+            conn = new DatabaseConnectionFactory();
+            uow = new UnitOfWork(conn);
             InitializeComponent();
             NameBox.DataContext = _job; 
             DescriptionBox.DataContext = _job;
+            empName.DataContext = _employee;
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
@@ -52,9 +61,17 @@ namespace PizzaNinja
             }
         }
 
-        private void SubmitButton_Click(object sender, RoutedEventArgs e)
+        private async void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
+            int jobId = _job._jobId;
+            int employeeId = _employee._employeeId;
+            int truckId = 1;
+            string date = DateTime.Now.ToShortDateString();
+            CompletedJob cj = new CompletedJob(1,jobId,employeeId,truckId,date);
+            var test = await Task.Run(() => uow.CompletedJobs.CompleteJobAsync(cj));
+            var testicle = await Task.Run(() => uow.Jobs.DeleteAsync(jobId));
 
+            this.Close();
         }
     }
 }

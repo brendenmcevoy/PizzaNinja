@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PN.DB.Repository;
 using PN.Logic;
 
 namespace PN.DB.Interfaces
@@ -12,5 +13,6 @@ namespace PN.DB.Interfaces
         ITruckRepository<Truck> Trucks { get; }
         IJobRepository<Job> Jobs { get; }
         IEmployeeRepository<Employee> Employees { get; }
+        ICompledJobRepository<CompletedJob> CompletedJobs { get; }
     }
 }

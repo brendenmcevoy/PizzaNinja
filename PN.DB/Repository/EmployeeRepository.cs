@@ -42,9 +42,42 @@ namespace PN.DB.Repository
             throw new NotImplementedException();
         }
 
+        public async Task<string> GetPasswordAsync(string password)
+        {
+            using (var connection = _connectionFactory.GetConnection)
+            {
+                var sql = "SELECT Password FROM Employee WHERE (Password = @password)";
+                connection.Open();
+                var result = await Task.Run(() => connection.QueryFirstOrDefaultAsync<string>(sql, new { Password = password }).Result);
+                return result;
+            }
+        }
+
+        public async Task<string> GetUsernameAsync(string username)
+        {
+            using (var connection = _connectionFactory.GetConnection)
+            {
+                var sql = "SELECT Username FROM Employee WHERE (Username = @username)";
+                connection.Open();
+                var result = await Task.Run(() => connection.QueryFirstOrDefaultAsync<string>(sql, new {Username = username}).Result);
+                return result;
+            }
+        }
+
         public Task<int> UpdateAsync(Employee entity)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<Employee> GetEmployeeByUsernameAsync(string username)
+        {
+            using (var connection = _connectionFactory.GetConnection)
+            {
+                var sql = "SELECT * FROM Employee WHERE (Username = @username)";
+                connection.Open();
+                var result = await Task.Run(() => connection.QueryFirstOrDefaultAsync<Employee>(sql, new { Username = username }).Result);
+                return result;
+            }
         }
     }
 }

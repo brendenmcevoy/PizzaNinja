@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PN.DB.Interfaces;
+using PN.DB.UOW;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -13,21 +15,38 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PN.Logic;
 
 namespace PizzaNinja
 {
     public partial class LogIn : Window
     {
+        private IConnectionFactory conn;
+        private UnitOfWork uow;
         public LogIn()
         {
+            conn = new DatabaseConnectionFactory();
+            uow = new UnitOfWork(conn);
             InitializeComponent();
         }
-        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            EmployeeUI employeeUI = new EmployeeUI();
-            employeeUI.Show();
-            this.Close();
+            string username = UsernameBox.Text;
+            string password = PasswordBox.Password;
+            var userKey =  await Task.Run(() => uow.Employees.GetUsernameAsync(username).Result);
+            var passwordKey = await Task.Run(() => uow.Employees.GetPasswordAsync(password).Result);
 
+            if(username == userKey && password == passwordKey)
+            {
+                Employee employee = await Task.Run(() => uow.Employees.GetEmployeeByUsernameAsync(username).Result);
+                EmployeeUI employeeUI = new EmployeeUI(employee);
+                employeeUI.Show();
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Username and Password did not match");
+            }
         }
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
         {

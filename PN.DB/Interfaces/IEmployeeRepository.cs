@@ -8,6 +8,9 @@ using PN.Logic;
 namespace PN.DB.Interfaces
 {
     public interface IEmployeeRepository<Employee> : IGenericRepository<Employee>
-    {     
+    {
+        Task<string> GetUsernameAsync(string username);
+        Task<Employee> GetEmployeeByUsernameAsync(string username);
+        Task<string> GetPasswordAsync(string password);
     }
 }
