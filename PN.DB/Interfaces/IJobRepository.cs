@@ -8,5 +8,6 @@ namespace PN.DB.Interfaces
 {
     public interface IJobRepository<Job> : IGenericRepository<Job>
     {
+        Task <List<Job>> GetAllByIdAsync(int id);
     }
 }

@@ -1,4 +1,6 @@
-﻿using PN.DB.Interfaces;
+﻿using Dapper;
+using PN.DB.Interfaces;
+using PN.Logic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,27 +16,44 @@ namespace PN.DB.Repository
         {
             _connectionFactory = Conn;
         }
-        Task<int> IGenericRepository<Job>.AddAsync(Job entity)
+
+        public Task<int> AddAsync(Job entity)
         {
             throw new NotImplementedException();
         }
 
-        Task<int> IGenericRepository<Job>.DeleteAsync(int id)
+        public Task<int> DeleteAsync(int id)
         {
             throw new NotImplementedException();
         }
 
-        Task<List<Job>> IGenericRepository<Job>.GetAllAsync()
+        public async Task<List<Job>> GetAllAsync()
+        {
+            using (var connection = _connectionFactory.GetConnection)
+            {
+                var sql = "SELECT * FROM Jobs";
+                connection.Open();
+                var result = await Task.Run(() => SqlMapper.Query<Job>(connection, sql).ToList());
+                return result;
+            }
+        }
+        public async Task<List<Job>> GetAllByIdAsync(int id)
+        {
+            using (var connection = _connectionFactory.GetConnection)
+            {
+                var sql = "SELECT * FROM Jobs WHERE TruckId = @TruckId";
+                connection.Open();
+                var result = await Task.Run(() => SqlMapper.Query<Job>(connection, sql, new { TruckId = id}).ToList());
+                return result;
+            }
+        }
+
+        public Task<Job> GetByIdAsync(int id)
         {
             throw new NotImplementedException();
         }
 
-        Task<Job> IGenericRepository<Job>.GetByIdAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<int> IGenericRepository<Job>.UpdateAsync(Job entity)
+        public Task<int> UpdateAsync(Job entity)
         {
             throw new NotImplementedException();
         }
