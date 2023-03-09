@@ -95,8 +95,15 @@
                 </Style>
             </DataGrid.Resources>
             <DataGrid.Columns>
+                <DataGridTemplateColumn Width="40">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="JobButton" Click="JobButton_Click">Go</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTextColumn Header="Job Id" Width="50" Binding="{Binding _jobId}"/>
-                <DataGridTextColumn Header="Name" Width="200" Binding="{Binding _name}"/>
+                <DataGridTextColumn Header="Name" Width="150" Binding="{Binding _name}"/>
                 <DataGridTextColumn Header="Description" Width="*" Binding="{Binding _description}"/>
             </DataGrid.Columns>
         </DataGrid>

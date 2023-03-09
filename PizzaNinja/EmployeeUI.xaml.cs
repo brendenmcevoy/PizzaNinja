@@ -58,6 +58,12 @@ namespace PizzaNinja
                 JobsDisplay.Items.Add(j);
             }
         }
+        private void JobButton_Click(object sender, RoutedEventArgs e)
+        {
+            Job job = (Job)JobsDisplay.SelectedItem;
+            JobsUI jobsUi = new JobsUI(job);
+            jobsUi.Show();  
+        }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
