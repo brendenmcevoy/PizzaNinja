@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 namespace PN.DB.Interfaces
 {
     public interface ICompledJobRepository<CompletedJob> : IGenericRepository<CompletedJob>
-    {
-        Task<int> CompleteJobAsync(CompletedJob job);
+    {      
     }
 }

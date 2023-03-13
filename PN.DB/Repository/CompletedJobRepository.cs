@@ -16,22 +16,16 @@ namespace PN.DB.Repository
         {
             _connectionFactory = Conn;
         }
-        public Task<int> AddAsync(CompletedJob entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<int> CompleteJobAsync(CompletedJob entity)
+        public async Task<int> AddAsync(CompletedJob entity)
         {
             using (var connection = _connectionFactory.GetConnection)
             {
-                var sql = "INSERT into CompletedJobs (Id,JobId,EmployeeId,TruckId) VALUES (@Id,@JobId,@EmployeeId,@TruckId)";
+                var sql = "INSERT into CompletedJobs (Id,JobId,EmployeeId,TruckId,Notes) VALUES (@Id,@JobId,@EmployeeId,@TruckId,@Notes)";
                 connection.Open();
                 var result = await Task.Run(() => connection.ExecuteAsync(sql, entity));
                 return result;
             }
         }
-
         public Task<int> DeleteAsync(int id)
         {
             throw new NotImplementedException();
