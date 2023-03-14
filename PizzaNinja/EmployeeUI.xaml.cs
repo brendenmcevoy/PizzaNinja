@@ -51,7 +51,7 @@ namespace PizzaNinja
         {
             JobsDisplay.Items.Clear();
             Truck truck = (Truck)TruckBox.SelectedItem;
-            int id = truck.GetId();
+            int id = truck.TruckId;
             foreach (Job j in new List<Job>(await Task.Run(() => uow.Jobs.GetAllByIdAsync(id).Result)))
             {
                 JobsDisplay.Items.Add(j);

@@ -63,12 +63,12 @@ namespace PizzaNinja
 
         private async void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
-            int jobId = _job._jobId;
-            int employeeId = _employee._employeeId;
+            int jobId = _job.JobId;
+            int employeeId = _employee.Id;
             int truckId = 1;
             string date = DateTime.Now.ToShortDateString();
             CompletedJob cj = new CompletedJob(1,jobId,employeeId,truckId,date);
-            var test = await Task.Run(() => uow.CompletedJobs.CompleteJobAsync(cj));
+            var test = await Task.Run(() => uow.CompletedJobs.AddAsync(cj));
             var testicle = await Task.Run(() => uow.Jobs.DeleteAsync(jobId));
 
             this.Close();

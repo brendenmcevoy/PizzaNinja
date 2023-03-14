@@ -102,9 +102,9 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Header="Job Id" Width="50" Binding="{Binding _jobId}"/>
-                <DataGridTextColumn Header="Name" Width="150" Binding="{Binding _name}"/>
-                <DataGridTextColumn Header="Description" Width="*" Binding="{Binding _description}"/>
+                <DataGridTextColumn Header="Job Id" Width="50" Binding="{Binding JobId}"/>
+                <DataGridTextColumn Header="Name" Width="150" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Description" Width="*" Binding="{Binding Description}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

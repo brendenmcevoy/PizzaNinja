@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
+using PN.Logic;
 
 namespace PN.DB.Repository
 {
@@ -20,21 +21,33 @@ namespace PN.DB.Repository
         {
             using (var connection = _connectionFactory.GetConnection)
             {
-                var sql = "INSERT into Employee (Id,Name,IsAdmin) VALUES (@Id,@Name,@IsAdmin)";
+                var sql = "INSERT into Employee (Id,Name,IsAdmin,Username,Password) VALUES (@Id,@Name,@IsAdmin,@Username,@Password)";
                 connection.Open();
-                var result = await Task.Run(() => connection.ExecuteAsync(sql));
+                var result = await Task.Run(() => connection.ExecuteAsync(sql,entity));
                 return result;
             }
         }
 
-        public Task<int> DeleteAsync(int id)
+        public async Task<int> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            using (var connection = _connectionFactory.GetConnection)
+            {
+                var sql = "DELETE FROM Employee WHERE Id = @Id";
+                connection.Open();
+                var result = await Task.Run(() => connection.ExecuteAsync(sql, new {Id = id}));
+                return result;
+            }
         }
 
-        public Task<List<Employee>> GetAllAsync()
+        public async Task<List<Employee>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            using (var connection = _connectionFactory.GetConnection)
+            {
+                var sql = "SELECT * FROM Employee";
+                connection.Open();
+                var result = await Task.Run(() => SqlMapper.Query<Employee>(connection, sql).ToList());
+                return result;
+            }
         }
 
         public Task<Employee> GetByIdAsync(int id)

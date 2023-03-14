@@ -8,12 +8,12 @@ namespace PN.Logic
 {
     public class CompletedJob
     {
-        public int Id { get; set; }
-        public int JobId { get; set; }
-        public int EmployeeId { get; set; }
-        public int TruckId { get; set; }
-        private string Date { get; set; }
-        private string Notes { get; set; }  //Can be NULL
+        public int Id { get; private set; }
+        public int JobId { get; private set; }
+        public int EmployeeId { get; private set; }
+        public int TruckId { get; private set; }
+        public string Date { get; private set; }
+        public string Notes { get; private set; }  //Can be NULL
 
         public CompletedJob(int id, int jobId, int employeeId, int truckId, string date, string notes)
         {

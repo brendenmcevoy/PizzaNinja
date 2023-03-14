@@ -39,9 +39,19 @@ namespace PizzaNinja
             if(username == userKey && password == passwordKey)
             {
                 Employee employee = await Task.Run(() => uow.Employees.GetEmployeeByUsernameAsync(username).Result);
-                EmployeeUI employeeUI = new EmployeeUI(employee);
-                employeeUI.Show();
-                this.Close();
+
+                if (employee.IsAdmin) 
+                {
+                    AdminUI adminUI = new AdminUI(employee); 
+                    adminUI.Show();
+                    this.Close();
+                }
+                else 
+                {
+                    EmployeeUI employeeUI = new EmployeeUI(employee);
+                    employeeUI.Show();
+                    this.Close();
+                }                
             }
             else
             {
