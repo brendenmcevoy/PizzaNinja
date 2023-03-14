@@ -9,7 +9,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -20,53 +19,56 @@ using System.Windows.Shapes;
 namespace PizzaNinja
 {
     /// <summary>
-    /// Interaction logic for EditEmployees.xaml
+    /// Interaction logic for EditJobs.xaml
     /// </summary>
-    public partial class EditEmployees : Window
+    public partial class EditJobs : Window
     {
         private IConnectionFactory conn;
         private UnitOfWork uow;
-        private Employee _adminEmployee;
-        private ObservableCollection<Employee> employees;
-        public EditEmployees(Employee adminEmployee)
+        private ObservableCollection<Job> jobs;
+        public EditJobs()
         {
             conn = new DatabaseConnectionFactory();
             uow = new UnitOfWork(conn);
-            _adminEmployee = adminEmployee;
+            jobs = new ObservableCollection<Job>();
             InitializeComponent();
-            employees = new ObservableCollection<Employee>();
-            EmployeeList.ItemsSource = employees;
-        } 
-        private async void EmployeeList_Initialized(object sender, EventArgs e)
+            JobList.ItemsSource = jobs;
+        }
+
+        private async void JobList_Initialized(object sender, EventArgs e)
         {
-            foreach (Employee em in new ObservableCollection<Employee>(await Task.Run(() => uow.Employees.GetAllAsync().Result)))
+            foreach (Job j in new ObservableCollection<Job>(await Task.Run(() => uow.Jobs.GetAllAsync().Result)))
             {
-                employees.Add(em);
+                jobs.Add(j);
             }
         }
+
         private async void RefreshList()
         {
-            employees.Clear();
+            jobs.Clear();
 
-            foreach (Employee em in new ObservableCollection<Employee>(await Task.Run(() => uow.Employees.GetAllAsync().Result)))
+            foreach (Job j in new ObservableCollection<Job>(await Task.Run(() => uow.Jobs.GetAllAsync().Result)))
             {
-                employees.Add(em);
+                jobs.Add(j);
             }
         }
-        private async void AddButton_Click(object sender, RoutedEventArgs e)
+
+        private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            Employee employee = new Employee();
-            employee.Name = NameBox.Text;
-            employee.Username = NameBox.Text;
-            employee.Password = PasswordBox.Text;
-            employee.IsAdmin = bool.Parse(AdminBox.Text);
-            var output = await Task.Run(() => uow.Employees.AddAsync(employee));
+            Job job = new Job();
+            job.JobId = int.Parse(JobIdBox.Text);
+            job.Name = NameBox.Text;
+            job.Description = DescriptionBox.Text;
+            job.TruckId = int.Parse(TruckIdBox.Text);
+
+            var output = uow.Jobs.AddAsync(job);    
             RefreshList();
         }
+
         private async void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
-            Employee employee = EmployeeList.SelectedItem as Employee;
-            var output = await Task.Run(() => uow.Employees.DeleteAsync(employee.Id));
+            var job = JobList.SelectedItem as Job;
+            var output = await Task.Run(() => uow.Jobs.DeleteAsync(job.JobId));
             RefreshList();
         }
 
@@ -76,6 +78,7 @@ namespace PizzaNinja
             {
                 DragMove();
             }
+
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)

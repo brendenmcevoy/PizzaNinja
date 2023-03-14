@@ -67,9 +67,15 @@ namespace PizzaNinja
             int employeeId = _employee.Id;
             int truckId = 1;
             string date = DateTime.Now.ToShortDateString();
-            CompletedJob cj = new CompletedJob(1,jobId,employeeId,truckId,date);
+            CompletedJob cj = new CompletedJob();
+            cj.JobId = jobId;
+            cj.EmployeeId = employeeId;
+            cj.TruckId = truckId;
+            cj.Date = date;
+            cj.Notes = NotesBox.Text;
+            
             var test = await Task.Run(() => uow.CompletedJobs.AddAsync(cj));
-            var testicle = await Task.Run(() => uow.Jobs.DeleteAsync(jobId));
+            var testicle = await Task.Run(() => uow.Jobs.DeleteByIdAsync(jobId,truckId));
 
             this.Close();
         }

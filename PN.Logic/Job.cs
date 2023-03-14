@@ -8,16 +8,10 @@ namespace PN.Logic
 {
     public class Job
     {
-        public int JobId { get; private set; }
-        public string Name { get; private set; }
-        public string Description { get; private set; }
-        public int TruckId { get; private set; }
-        public Job(int jobId, string name, string description, int truckId)
-        {
-            JobId = jobId;
-            Name =  name;
-            Description = description;
-            TruckId = truckId;
-        }
+        public int Id { get; set; }
+        public int JobId { get;  set; }
+        public string Name { get;  set; }
+        public string Description { get; set; }
+        public int TruckId { get; set; }
     }
 }

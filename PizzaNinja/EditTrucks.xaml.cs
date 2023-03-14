@@ -9,7 +9,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -20,24 +19,23 @@ using System.Windows.Shapes;
 namespace PizzaNinja
 {
     /// <summary>
-    /// Interaction logic for AdminUI.xaml
+    /// Interaction logic for EditTrucks.xaml
     /// </summary>
-    public partial class AdminUI : Window
+    public partial class EditTrucks : Window
     {
         private IConnectionFactory conn;
         private UnitOfWork uow;
         private Employee _adminEmployee;
         private ObservableCollection<Truck> trucks;
-        public AdminUI(Employee adminEmployee)
+        public EditTrucks()
         {
             conn = new DatabaseConnectionFactory();
             uow = new UnitOfWork(conn);
-            _adminEmployee = adminEmployee;
-            InitializeComponent(); 
+            InitializeComponent();
             trucks = new ObservableCollection<Truck>();
-            TruckBox.ItemsSource = trucks;
+            TruckList.ItemsSource = trucks;
         }
-        private async void TruckBox_Initialized(object sender, EventArgs e)
+        private async void TruckList_Initialized(object sender, EventArgs e)
         {
             foreach (Truck t in new ObservableCollection<Truck>(await Task.Run(() => uow.Trucks.GetAllAsync().Result)))
             {
@@ -53,37 +51,22 @@ namespace PizzaNinja
                 trucks.Add(t);
             }
         }
-        private async void TruckBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+
+        private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            JobsDisplay.Items.Clear();
-            Truck truck = (Truck)TruckBox.SelectedItem;
-            foreach (Job j in new List<Job>(await Task.Run(() => uow.Jobs.GetAllByIdAsync(truck.TruckId).Result)))
-            {
-                JobsDisplay.Items.Add(j);
-            }
-        }
-        private void JobButton_Click(object sender, RoutedEventArgs e)
-        {
-            Job job = (Job)JobsDisplay.SelectedItem;
-            JobsUI jobsUi = new JobsUI(job, _adminEmployee);
-            jobsUi.Show();
-        } 
-        private void EditEmployees_Selected(object sender, RoutedEventArgs e)
-        {
-            EditEmployees editE = new EditEmployees(_adminEmployee);
-            editE.Show();
-        }
-        private void EditTrucks_Selected(object sender, RoutedEventArgs e)
-        {
-            EditTrucks editT = new EditTrucks();
-            editT.Show();
+            Truck truck = new Truck();
+            truck.Name = NameBox.Text;
+            uow.Trucks.AddAsync(truck);
             RefreshList();
         }
-        private void EditJobs_Selected(object sender, RoutedEventArgs e)
+
+        private async void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
-            EditJobs editJ = new EditJobs();
-            editJ.Show();
+            Truck truck = TruckList.SelectedItem as Truck;
+            var output = await Task.Run(() => uow.Trucks.DeleteAsync(truck.TruckId));
+            RefreshList();
         }
+
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if(e.LeftButton == MouseButtonState.Pressed)
@@ -94,7 +77,7 @@ namespace PizzaNinja
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            Application.Current.Shutdown();
+            this.Close();
         }
 
         private void MaxButton_Click(object sender, RoutedEventArgs e)
@@ -106,7 +89,5 @@ namespace PizzaNinja
         {
             WindowState = WindowState.Minimized;
         }
-
-        
     }
 }

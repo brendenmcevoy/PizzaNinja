@@ -21,7 +21,7 @@ namespace PN.DB.Repository
         {
             using (var connection = _connectionFactory.GetConnection)
             {
-                var sql = "INSERT into Employee (Id,Name,IsAdmin,Username,Password) VALUES (@Id,@Name,@IsAdmin,@Username,@Password)";
+                var sql = "INSERT into Employee (Name,IsAdmin,Username,Password) VALUES (@Name,@IsAdmin,@Username,@Password)";
                 connection.Open();
                 var result = await Task.Run(() => connection.ExecuteAsync(sql,entity));
                 return result;

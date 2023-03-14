@@ -75,9 +75,11 @@
                           Content="Edit Employees"
                           Selected="EditEmployees_Selected"/>
             <ComboBoxItem x:Name="EditTrucks"
-                          Content="Edit Trucks"/>
+                          Content="Edit Trucks"
+                          Selected="EditTrucks_Selected"/>
             <ComboBoxItem x:Name="EditJobs"
-                          Content="Edit Jobs"/>
+                          Content="Edit Jobs"
+                          Selected="EditJobs_Selected"/>
         </ComboBox>
         <ComboBox x:Name="TruckBox"
                   Grid.Column="3"

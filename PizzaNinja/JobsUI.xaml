@@ -32,7 +32,7 @@
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
         <Label x:Name="empName"
-               Content="{Binding _name}"
+               Content="{Binding Name}"
                Grid.Column="1"
                Grid.Row="1"
                Height="40"
@@ -80,7 +80,7 @@
                    FontSize="20"               
                    FontWeight="Bold"
                    Margin="0,10,0,0"
-                   Text="{Binding _name}"/>
+                   Text="{Binding Name}"/>
         <Label Content="Notes:"
                Grid.Row="1"
                Grid.ColumnSpan="3"
@@ -136,7 +136,7 @@
                        Width="180"
                        Height="200"
                        TextWrapping="Wrap"
-                       Text="{Binding _description}"/>
+                       Text="{Binding Description}"/>
         </Border>
         <Button x:Name="SubmitButton"
                 Content="Submit"

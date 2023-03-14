@@ -2,18 +2,10 @@
 {
     public class Employee
     {
-        public int Id { get; private set; }
-        public string Name { get; private set; }
-        public bool IsAdmin { get; private set; }
-        public string Username { get; private set; }   
-        public string Password { get; private set; }   
-        public Employee(int id, string name, bool isAdmin, string username, string password)
-        {
-            Id =  id;
-            Name = name;
-            IsAdmin = isAdmin;
-            Username = username;
-            Password = password;
-        }
+        public int Id { get;  set; }
+        public string Name { get;  set; }
+        public bool IsAdmin { get;  set; }
+        public string Username { get;  set; }   
+        public string Password { get;  set; }   
     }
 }

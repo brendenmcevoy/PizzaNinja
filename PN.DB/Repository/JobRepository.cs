@@ -17,9 +17,25 @@ namespace PN.DB.Repository
             _connectionFactory = Conn;
         }
 
-        public Task<int> AddAsync(Job entity)
+        public async Task<int> AddAsync(Job entity)
         {
-            throw new NotImplementedException();
+            using (var connection = _connectionFactory.GetConnection)
+            {
+                var sql = "INSERT into Jobs (JobId,Name,Description,TruckId) VALUES (@JobId,@Name,@Description,@TruckId)";
+                connection.Open();
+                var result = await Task.Run(() => connection.ExecuteAsync(sql, entity));
+                return result;
+            }
+        }
+        public async Task<int> DeleteByIdAsync(int id,int truckId)
+        {
+            using (var connection = _connectionFactory.GetConnection)
+            {
+                var sql = "DELETE FROM Jobs WHERE JobId = @JobId AND TruckId = @TruckId";
+                connection.Open();
+                var result = await Task.Run(() => connection.ExecuteAsync(sql, new { JobId = id, TruckId = truckId }));
+                return result;
+            }
         }
         public async Task<int> DeleteAsync(int id)
         {
@@ -27,7 +43,7 @@ namespace PN.DB.Repository
             {
                 var sql = "DELETE FROM Jobs WHERE JobId = @JobId";
                 connection.Open();
-                var result = await Task.Run(() => connection.ExecuteAsync(sql, new { JobId = id }));
+                var result = await Task.Run(() => connection.ExecuteAsync(sql, new { JobId = id}));
                 return result;
             }
         }

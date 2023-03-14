@@ -16,14 +16,26 @@ namespace PN.DB.Repository
             _connectionFactory = Conn;
         }
 
-        public Task<int> AddAsync(Truck entity)
+        public async Task<int> AddAsync(Truck entity)
         {
-            throw new NotImplementedException();
+            using (var connection = _connectionFactory.GetConnection)
+            {
+                var sql = "INSERT into Truck (Name) VALUES (@Name)";
+                connection.Open();
+                var result = await Task.Run(() => connection.ExecuteAsync(sql, entity));
+                return result;
+            }
         }
 
-        public Task<int> DeleteAsync(int id)
+        public async Task<int> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            using (var connection = _connectionFactory.GetConnection)
+            {
+                var sql = "DELETE FROM Truck WHERE TruckId = @Id";
+                connection.Open();
+                var result = await Task.Run(() => connection.ExecuteAsync(sql, new { Id = id }));
+                return result;
+            }
         }
 
         public async Task<List<Truck>> GetAllAsync()
