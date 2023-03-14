@@ -56,11 +56,12 @@ namespace PizzaNinja
         private async void TruckBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             JobsDisplay.Items.Clear();
-            Truck truck = (Truck)TruckBox.SelectedItem;
+            Truck truck = (Truck)TruckBox.SelectedItem;           
             foreach (Job j in new List<Job>(await Task.Run(() => uow.Jobs.GetAllByIdAsync(truck.TruckId).Result)))
             {
                 JobsDisplay.Items.Add(j);
             }
+            
         }
         private void JobButton_Click(object sender, RoutedEventArgs e)
         {
