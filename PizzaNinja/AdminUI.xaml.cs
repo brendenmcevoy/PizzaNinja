@@ -55,18 +55,20 @@ namespace PizzaNinja
         }
         private async void TruckBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            JobsDisplay.Visibility = Visibility.Visible;
+            CompletedJobsDisplay.Visibility = Visibility.Hidden;
             JobsDisplay.Items.Clear();
             Truck truck = (Truck)TruckBox.SelectedItem;           
             foreach (Job j in new List<Job>(await Task.Run(() => uow.Jobs.GetAllByIdAsync(truck.TruckId).Result)))
             {
                 JobsDisplay.Items.Add(j);
-            }
-            
+            }       
         }
         private void JobButton_Click(object sender, RoutedEventArgs e)
         {
             Job job = (Job)JobsDisplay.SelectedItem;
-            JobsUI jobsUi = new JobsUI(job, _adminEmployee);
+            Truck truck = (Truck)TruckBox.SelectedItem;
+            JobsUI jobsUi = new JobsUI(job, _adminEmployee, truck);
             jobsUi.Show();
         } 
         private void EditEmployees_Selected(object sender, RoutedEventArgs e)
@@ -84,6 +86,16 @@ namespace PizzaNinja
         {
             EditJobs editJ = new EditJobs();
             editJ.Show();
+        }
+        private async void CompletedJobsButton_Click(object sender, RoutedEventArgs e)
+        {
+            CompletedJobsDisplay.Visibility = Visibility.Visible;
+
+            CompletedJobsDisplay.Items.Clear();
+            foreach(CompletedJob cj in new List<CompletedJob>(await Task.Run(() => uow.CompletedJobs.GetAllAsync().Result)))
+            {
+                CompletedJobsDisplay.Items.Add(cj);
+            }
         }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {

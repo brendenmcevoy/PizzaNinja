@@ -51,8 +51,8 @@ namespace PizzaNinja
         {
             JobsDisplay.Items.Clear();
             Truck truck = (Truck)TruckBox.SelectedItem;
-            int id = truck.TruckId;
-            foreach (Job j in new List<Job>(await Task.Run(() => uow.Jobs.GetAllByIdAsync(id).Result)))
+
+            foreach (Job j in new List<Job>(await Task.Run(() => uow.Jobs.GetAllByIdAsync(truck.TruckId).Result)))
             {
                 JobsDisplay.Items.Add(j);
             }
@@ -60,7 +60,8 @@ namespace PizzaNinja
         private void JobButton_Click(object sender, RoutedEventArgs e)
         {
             Job job = (Job)JobsDisplay.SelectedItem;
-            JobsUI jobsUi = new JobsUI(job,_employee);
+            Truck truck = (Truck)TruckBox.SelectedItem;
+            JobsUI jobsUi = new JobsUI(job,_employee,truck);
             jobsUi.Show();  
         }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)

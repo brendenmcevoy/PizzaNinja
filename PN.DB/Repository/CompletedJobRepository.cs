@@ -20,7 +20,7 @@ namespace PN.DB.Repository
         {
             using (var connection = _connectionFactory.GetConnection)
             {
-                var sql = "INSERT into CompletedJobs (JobId,EmployeeId,TruckId,Date,Notes) VALUES (@JobId,@EmployeeId,@TruckId,@Date,@Notes)";
+                var sql = "INSERT into CompletedJobs (JobId,EmployeeId,TruckId,Date,Notes,Name,Description) VALUES (@JobId,@EmployeeId,@TruckId,@Date,@Notes,@Name,@Description)";
                 connection.Open();
                 var result = await Task.Run(() => connection.ExecuteAsync(sql, entity));
                 return result;
@@ -31,9 +31,15 @@ namespace PN.DB.Repository
             throw new NotImplementedException();
         }
 
-        public Task<List<CompletedJob>> GetAllAsync()
+        public async Task<List<CompletedJob>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            using (var connection = _connectionFactory.GetConnection)
+            {
+                var sql = "SELECT * FROM CompletedJobs";
+                connection.Open();
+                var result = await Task.Run(() => SqlMapper.Query<CompletedJob>(connection, sql).ToList());
+                return result;
+            }
         }
 
         public Task<CompletedJob> GetByIdAsync(int id)

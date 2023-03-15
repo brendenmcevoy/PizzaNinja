@@ -92,6 +92,15 @@
                   BorderThickness="1"
                   Initialized="TruckBox_Initialized" 
                   SelectionChanged="TruckBox_SelectionChanged"/>
+        <Button x:Name="CompletedJobsButton"
+                Content="View Completed Jobs"
+                FontSize="10"
+                Grid.Column="5"
+                Grid.Row="1"
+                Height="40"
+                Width="115"
+                Click="CompletedJobsButton_Click"/>
+
         <DataGrid x:Name="JobsDisplay"
                   Grid.Row="2"
                   Grid.RowSpan="3"
@@ -103,7 +112,8 @@
                   Margin="0,20,0,0"
                   Foreground="Black"
                   CanUserResizeColumns="False"
-                  CanUserResizeRows="False">
+                  CanUserResizeRows="False"
+                  Visibility="Visible">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridColumnHeader}">
                     <Setter Property="BorderThickness" Value="0,0,1,2"/>
@@ -119,9 +129,37 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Header="Job Id" Width="50" Binding="{Binding JobId}"/>
+                <DataGridTextColumn Header="Job Id" Width="50" Binding="{Binding JobId}" />
                 <DataGridTextColumn Header="Name" Width="150" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Description" Width="*" Binding="{Binding Description}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid x:Name="CompletedJobsDisplay"
+                  Grid.Row="2"
+                  Grid.RowSpan="3"
+                  Grid.Column="1"
+                  Grid.ColumnSpan="5"
+                  Width="700"
+                  Height="300"
+                  HorizontalAlignment="Left"
+                  Margin="0,20,0,0"
+                  Foreground="Black"
+                  CanUserResizeColumns="False"
+                  CanUserResizeRows="False"
+                  Visibility="Hidden">
+            <DataGrid.Resources>
+                <Style TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="BorderThickness" Value="0,0,1,2"/>
+                    <Setter Property="BorderBrush" Value="Black"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                </Style>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Job Id" Width="45" Binding="{Binding JobId}"/>
+                <DataGridTextColumn Header="Truck Id" Width="50" Binding="{Binding TruckId}"/>
+                <DataGridTextColumn Header="Employee Id" Width="70" Binding="{Binding EmployeeId}"/>
+                <DataGridTextColumn Header="Description" Width="350" Binding="{Binding Description}"/>
+                <DataGridTextColumn Header="Notes" Width="*" Binding="{Binding Notes}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

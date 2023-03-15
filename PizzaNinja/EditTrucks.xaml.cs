@@ -25,7 +25,6 @@ namespace PizzaNinja
     {
         private IConnectionFactory conn;
         private UnitOfWork uow;
-        private Employee _adminEmployee;
         private ObservableCollection<Truck> trucks;
         public EditTrucks()
         {

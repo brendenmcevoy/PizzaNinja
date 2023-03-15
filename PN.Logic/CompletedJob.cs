@@ -12,6 +12,8 @@ namespace PN.Logic
         public int JobId { get; set; }
         public int EmployeeId { get; set; }
         public int TruckId { get; set; }
+        public string Description { get; set; }
+        public string Name { get; set; }
         public string Date { get; set; }
         public string Notes { get;  set; }  //Can be NULL
 

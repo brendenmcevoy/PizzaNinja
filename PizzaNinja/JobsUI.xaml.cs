@@ -24,18 +24,35 @@ namespace PizzaNinja
     {
         private Job _job;
         private Employee _employee;
+        private Truck _truck;
         private IConnectionFactory conn;
         private UnitOfWork uow;
-        public JobsUI(Job job,Employee employee)
+        public JobsUI(Job job,Employee employee,Truck truck)
         {
             _job = job;
             _employee = employee;
+            _truck = truck;
             conn = new DatabaseConnectionFactory();
             uow = new UnitOfWork(conn);
             InitializeComponent();
             NameBox.DataContext = _job; 
             DescriptionBox.DataContext = _job;
-            empName.DataContext = _employee;
+        }
+        private async void SubmitButton_Click(object sender, RoutedEventArgs e)
+        {
+            CompletedJob cj = new CompletedJob();
+            cj.JobId = _job.JobId;
+            cj.EmployeeId = _employee.Id;
+            cj.TruckId = _truck.TruckId;
+            cj.Date = DateTime.Now.ToShortDateString();
+            cj.Notes = NotesBox.Text;
+            cj.Name = _job.Name;
+            cj.Description = _job.Description;
+            
+            var test = await Task.Run(() => uow.CompletedJobs.AddAsync(cj));
+            var testicle = await Task.Run(() => uow.Jobs.DeleteByIdAsync(_job.JobId,_truck.TruckId));
+
+            this.Close();
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
@@ -61,23 +78,6 @@ namespace PizzaNinja
             }
         }
 
-        private async void SubmitButton_Click(object sender, RoutedEventArgs e)
-        {
-            int jobId = _job.JobId;
-            int employeeId = _employee.Id;
-            int truckId = 1;
-            string date = DateTime.Now.ToShortDateString();
-            CompletedJob cj = new CompletedJob();
-            cj.JobId = jobId;
-            cj.EmployeeId = employeeId;
-            cj.TruckId = truckId;
-            cj.Date = date;
-            cj.Notes = NotesBox.Text;
-            
-            var test = await Task.Run(() => uow.CompletedJobs.AddAsync(cj));
-            var testicle = await Task.Run(() => uow.Jobs.DeleteByIdAsync(jobId,truckId));
-
-            this.Close();
-        }
+        
     }
 }
