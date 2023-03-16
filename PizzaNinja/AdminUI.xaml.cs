@@ -57,12 +57,17 @@ namespace PizzaNinja
         {
             JobsDisplay.Visibility = Visibility.Visible;
             CompletedJobsDisplay.Visibility = Visibility.Hidden;
+
             JobsDisplay.Items.Clear();
-            Truck truck = (Truck)TruckBox.SelectedItem;           
-            foreach (Job j in new List<Job>(await Task.Run(() => uow.Jobs.GetAllByIdAsync(truck.TruckId).Result)))
+
+            Truck truck = (Truck)TruckBox.SelectedItem;  
+            if (truck != null) 
             {
-                JobsDisplay.Items.Add(j);
-            }       
+                foreach (Job j in new List<Job>(await Task.Run(() => uow.Jobs.GetAllByIdAsync(truck.TruckId).Result)))
+                {
+                    JobsDisplay.Items.Add(j);
+                }
+            }
         }
         private void JobButton_Click(object sender, RoutedEventArgs e)
         {
@@ -70,19 +75,19 @@ namespace PizzaNinja
             Truck truck = (Truck)TruckBox.SelectedItem;
             JobsUI jobsUi = new JobsUI(job, _adminEmployee, truck);
             jobsUi.Show();
-        } 
-        private void EditEmployees_Selected(object sender, RoutedEventArgs e)
+        }
+        private void EditEmployees_Click(object sender, RoutedEventArgs e)
         {
             EditEmployees editE = new EditEmployees(_adminEmployee);
             editE.Show();
         }
-        private void EditTrucks_Selected(object sender, RoutedEventArgs e)
+        private void EditTrucks_Click(object sender, RoutedEventArgs e)
         {
             EditTrucks editT = new EditTrucks();
             editT.Show();
             RefreshList();
         }
-        private void EditJobs_Selected(object sender, RoutedEventArgs e)
+        private void EditJobs_Click(object sender, RoutedEventArgs e)
         {
             EditJobs editJ = new EditJobs();
             editJ.Show();
@@ -92,6 +97,7 @@ namespace PizzaNinja
             CompletedJobsDisplay.Visibility = Visibility.Visible;
 
             CompletedJobsDisplay.Items.Clear();
+
             foreach(CompletedJob cj in new List<CompletedJob>(await Task.Run(() => uow.CompletedJobs.GetAllAsync().Result)))
             {
                 CompletedJobsDisplay.Items.Add(cj);
