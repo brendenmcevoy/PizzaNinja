@@ -8,11 +8,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Images\Logo.jpg" />
+    <None Remove="Fonts\CarterOne.ttf" />
+    <None Remove="Images\close.png" />
+    <None Remove="Images\LSP.png" />
+    <None Remove="Images\minimize.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Images\Logo.jpg">
+    <Content Include="Images\close.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\LSP.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\minimize.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -25,6 +34,12 @@
   <ItemGroup>
     <ProjectReference Include="..\PN.DB\PN.DB.csproj" />
     <ProjectReference Include="..\PN.Logic\PN.Logic.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Fonts\CarterOne.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

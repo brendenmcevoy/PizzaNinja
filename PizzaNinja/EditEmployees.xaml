@@ -10,30 +10,37 @@
         Width="800" 
         WindowStartupLocation="CenterScreen"
         WindowStyle="None" 
+        ResizeMode="NoResize"
+        AllowsTransparency="True"
+        Background="Transparent"
         MouseDown="Window_MouseDown">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="30"/>
-            <ColumnDefinition Width="105"/>
-            <ColumnDefinition Width="200"/>
-            <ColumnDefinition Width="75"/>
-            <ColumnDefinition Width="330"/>
-            <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="20"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="20"/>
-        </Grid.RowDefinitions>
-        <Button x:Name="CloseButton"
+    <Border Background="#6B7F82"
+                BorderBrush="#000000"
+                BorderThickness="3"
+                CornerRadius="8,8,8,8">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="105"/>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="75"/>
+                <ColumnDefinition Width="330"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="20"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+            <Button x:Name="CloseButton"
                 Grid.Column="7"
                 Grid.Row="0"
                 Width="20"
@@ -44,18 +51,7 @@
                 Background="Transparent"
                 BorderBrush="Transparent"
                 Click="CloseButton_Click"/>
-        <Button x:Name="MaxButton"
-                Grid.Column="6"
-                Grid.Row="0"
-                Width="20"
-                Height="20"
-                Content="[]"
-                FontFamily="Verdana"
-                FontWeight="Bold"
-                Background="Transparent"
-                BorderBrush="Transparent"
-                Click="MaxButton_Click"/>
-        <Button x:Name="MinimizeButton"
+            <Button x:Name="MinimizeButton"
                 Grid.Column="5"
                 Grid.Row="0"
                 Width="20"
@@ -66,28 +62,28 @@
                 Background="Transparent"
                 BorderBrush="Transparent"
                 Click="MinimizeButton_Click"/>
-        <ListView x:Name="EmployeeList"
+            <ListView x:Name="EmployeeList"
                   Grid.Column="4"
                   Grid.Row="1"
                   Grid.RowSpan="7"
                   BorderBrush="Black"
                   BorderThickness="2"
                   Initialized="EmployeeList_Initialized">
-            <ListView.View>
-                <GridView ColumnHeaderToolTip="Employee Information">
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Id}"
+                <ListView.View>
+                    <GridView ColumnHeaderToolTip="Employee Information">
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Id}"
                                     Header="Id"
                                     Width="40"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}"
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Name}"
                                     Header="Name"
                                     Width="100"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=IsAdmin}"
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=IsAdmin}"
                                     Header="Admin?"
                                     Width="100"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <Label Content="Add Employee"
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <Label Content="Add Employee"
                Grid.Column="1"
                Grid.ColumnSpan="2"
                Grid.Row="1"
@@ -97,51 +93,51 @@
                FontSize="28"
                FontWeight="Bold"
                Margin="20,0,0,0"/>
-        <Label Content="Name:"
+            <Label Content="Name:"
                FontSize="20"
                Grid.Column="1"
                Grid.Row="3"
                HorizontalContentAlignment="Right"/>
-        <TextBox x:Name="NameBox"
+            <TextBox x:Name="NameBox"
                  Grid.Column="2"
                  Grid.Row="3"
                  Height="30"
                  Width="200"
                  HorizontalAlignment="Left"/>
-        <Label Content="Admin:"
+            <Label Content="Admin:"
                FontSize="20"
                Grid.Column="1"
                Grid.Row="4"
                HorizontalContentAlignment="Right"/>
-        <TextBox x:Name="AdminBox"
+            <TextBox x:Name="AdminBox"
                  Grid.Column="2"
                  Grid.Row="4"
                  Height="30"
                  Width="200"
                  HorizontalAlignment="Left"/>
-        <Label Content="Username:"
+            <Label Content="Username:"
                FontSize="20"
                Grid.Column="1"
                Grid.Row="5"
                HorizontalContentAlignment="Right"/>
-        <TextBox x:Name="UsernameBox"
+            <TextBox x:Name="UsernameBox"
                  Grid.Column="2"
                  Grid.Row="5"
                  Height="30"
                  Width="200"
                  HorizontalAlignment="Left"/>
-        <Label Content="Password:"
+            <Label Content="Password:"
                FontSize="20"
                Grid.Column="1"
                Grid.Row="6"
                HorizontalContentAlignment="Right"/>
-        <TextBox x:Name="PasswordBox"
+            <TextBox x:Name="PasswordBox"
                  Grid.Column="2"
                  Grid.Row="6"
                  Height="30"
                  Width="200"
                  HorizontalAlignment="Left"/>
-        <Button x:Name="AddButton"
+            <Button x:Name="AddButton"
                 Content="Add Employee"
                 FontSize="14"
                 Grid.Column="1"
@@ -151,7 +147,7 @@
                 Width="105"
                 Margin="0,0,110,0"
                 Click="AddButton_Click"/>
-        <Button x:Name="RemoveButton"
+            <Button x:Name="RemoveButton"
                 Content="Remove Employee"
                 FontSize="14"
                 Grid.Column="2"
@@ -161,5 +157,6 @@
                 HorizontalAlignment="Right"
                 Margin="0,0,10,0"
                 Click="RemoveButton_Click"/>
-    </Grid>
+        </Grid>
+    </Border>
 </Window>

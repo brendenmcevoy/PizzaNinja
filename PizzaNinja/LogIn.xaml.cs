@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using PN.Logic;
+using System.Windows.Media.Converters;
 
 namespace PizzaNinja
 {
@@ -58,10 +59,13 @@ namespace PizzaNinja
                 MessageBox.Show("Username and Password did not match");
             }
         }
-        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
+        private void PasswordBox_GotFocus(object sender, RoutedEventArgs e)
+        {           
+            PasswordBox.Password = string.Empty;
+        }
+        private void UsernameBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri) { UseShellExecute = true});
-            e.Handled= true;
+            UsernameBox.Text= string.Empty;
         }
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
@@ -80,5 +84,7 @@ namespace PizzaNinja
                 DragMove();
             }
         }
+
+        
     }
 }

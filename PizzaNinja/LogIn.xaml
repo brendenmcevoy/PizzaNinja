@@ -5,73 +5,128 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PizzaNinja"
         mc:Ignorable="d"
-        Title="LogIn" Height="400" Width="650" 
+        Title="LogIn" 
+        Height="400"
+        Width="500"
         WindowStartupLocation="CenterScreen" 
-        WindowStyle="None" ResizeMode="NoResize"
-        MouseDown="Window_MouseDown">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"/>
-            <ColumnDefinition Width="80"/>
-            <ColumnDefinition Width="300"/>
-            <ColumnDefinition Width="120"/>
-            <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="5"/>
-            <ColumnDefinition Width="20"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="25"/>
-            <RowDefinition Height="35"/>
-            <RowDefinition Height="auto"/>
-        </Grid.RowDefinitions>
-        <Button x:Name="CloseButton"
-                Grid.Column="6"
-                Grid.Row="0"
-                Width="20"
-                Height="20"
-                Content="X"
-                FontFamily="Verdana"
-                FontWeight="Bold"
-                Background="Transparent"
-                BorderBrush="Transparent"
-                Click="CloseButton_Click"/>
-        <Button x:Name="MinimizeButton"
-                Grid.Column="4"
-                Grid.Row="0"
-                Width="20"
-                Height="20"
-                Content="-"
-                FontFamily="Verdana"
-                FontWeight="Bold"
-                Background="Transparent"
-                BorderBrush="Transparent"
-                Click="MinimizeButton_Click"/>
-        <StackPanel Grid.Column="2" Grid.Row="2">
-            <Image Source="/Images/Logo.jpg"
-                   Height="100"/>
-            <TextBox x:Name="UsernameBox"
-                     Height="30"
-                     Width="200"
-                     HorizontalContentAlignment="Center"
-                     BorderThickness="2"
-                     Margin="0,40,0,0"/>
-            <PasswordBox x:Name="PasswordBox"
-                         PasswordChar="*"
+        WindowStyle="None" 
+        ResizeMode="NoResize"
+        MouseDown="Window_MouseDown"
+        AllowsTransparency="True"
+        Background="Transparent">
+    <Window.Resources>
+        <Style x:Key="Carter" TargetType="TextBox">
+            <Setter Property="FontFamily" 
+                    Value="Fonts/CarterOne.ttf #Carter One"/>
+        </Style>
+    </Window.Resources>
+    <Border Background="#6B7F82"
+                BorderBrush="#000000"
+                BorderThickness="3"
+                CornerRadius="8,8,8,8">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="20"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Button x:Name="CloseButton"
+                    Grid.Column="4"
+                    Grid.Row="0"
+                    Width="25"
+                    Height="20"
+                    Background="Transparent"
+                    BorderBrush="Transparent"
+                    Click="CloseButton_Click">
+                <Button.Content>
+                    <Image Source="/Images/close.png"/>
+                </Button.Content>
+            </Button>
+
+            <Button x:Name="MinimizeButton"
+                    Grid.Column="3"
+                    Grid.Row="0"
+                    Width="18"
+                    Height="18"
+                    Background="Transparent"
+                    BorderBrush="Transparent"
+                    Click="MinimizeButton_Click">
+                <Button.Content>
+                    <Image Source="/Images/minimize.png"/>
+                </Button.Content>
+            </Button>
+
+            <StackPanel Grid.Column="1" 
+                        Grid.Row="1">
+                <Image Source="/Images/LSP.png"
+                   Height="200"/>
+                
+                <TextBox x:Name="UsernameBox"
+                         Text="Username"
+                         Style="{StaticResource Carter}"
                          Height="30"
                          Width="200"
                          HorizontalContentAlignment="Center"
+                         VerticalContentAlignment="Center"
+                         FontWeight="ExtraLight"
                          BorderThickness="2"
-                         Margin="0,20,0,0"/>
-            <Button x:Name="LoginButton"
-                    Height="40"
-                    Width="80"
-                    Margin="0,20,0,0"
-                    Content="Log In"
-                    Click="LoginButton_Click"/>
-            <TextBlock HorizontalAlignment="Center"
-                       Margin="0,8,0,0">
-                <Hyperlink NavigateUri="https://www.theluckyslice.com" RequestNavigate="Hyperlink_RequestNavigate">Forgot Login?? (Mike is gonna be mad.)</Hyperlink>
-            </TextBlock>
-        </StackPanel>
-    </Grid>
+                         Background="#F7F7FF"
+                         BorderBrush="#000000"
+                         GotFocus="UsernameBox_GotFocus"/>
+                
+                <PasswordBox x:Name="PasswordBox"
+                             Password="password"
+                             PasswordChar="*"
+                             Height="30"
+                             Width="200"
+                             HorizontalContentAlignment="Center"
+                             VerticalContentAlignment="Center"
+                             BorderThickness="2"
+                             Margin="0,20,0,0"
+                             Background="#F7F7FF"
+                             BorderBrush="#000000"
+                             GotFocus="PasswordBox_GotFocus"/>
+
+                <Button x:Name="LoginButton"
+                        Margin="0,20,0,0"
+                        Content="Log In"
+                        Click="LoginButton_Click">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" 
+                                    Value="#F7F7FF"/>
+                            <Setter Property="Foreground"
+                                    Value="#000000"/>
+                            <Setter Property="FontFamily" 
+                                    Value="/Fonts/CarterOne.ttf #Carter One"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" 
+                                            Value="#05299E"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Width="80" Height="40"
+                                    CornerRadius="9"
+                                    Background="{TemplateBinding Background}">
+                                <ContentPresenter VerticalAlignment="Center" 
+                                                  HorizontalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+            </StackPanel>
+        </Grid>
+    </Border>
 </Window>
