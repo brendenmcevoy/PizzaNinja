@@ -20,15 +20,15 @@
                     Value="Fonts/CarterOne.ttf #Carter One"/>
         </Style>
     </Window.Resources>
-    <Border Background="#6B7F82"
-                BorderBrush="#000000"
+    <Border Background="#515052"
+                BorderBrush="#000103"
                 BorderThickness="3"
                 CornerRadius="8,8,8,8">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100"/>
                 <ColumnDefinition Width="300"/>
-                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="20"/>
                 <ColumnDefinition Width="20"/>
             </Grid.ColumnDefinitions>
@@ -40,28 +40,29 @@
             <Button x:Name="CloseButton"
                     Grid.Column="4"
                     Grid.Row="0"
-                    Width="25"
+                    Width="20"
                     Height="20"
+                    Content="X"
+                    FontFamily="Verdana"
+                    FontWeight="Bold"
                     Background="Transparent"
                     BorderBrush="Transparent"
-                    Click="CloseButton_Click">
-                <Button.Content>
-                    <Image Source="/Images/close.png"/>
-                </Button.Content>
-            </Button>
+                    Click="CloseButton_Click"/>
+
 
             <Button x:Name="MinimizeButton"
                     Grid.Column="3"
                     Grid.Row="0"
+                    Content="-"
+                    FontFamily="Verdana"
+                    FontWeight="Bold"
+                    VerticalContentAlignment="Center"
                     Width="18"
                     Height="18"
                     Background="Transparent"
                     BorderBrush="Transparent"
-                    Click="MinimizeButton_Click">
-                <Button.Content>
-                    <Image Source="/Images/minimize.png"/>
-                </Button.Content>
-            </Button>
+                    Click="MinimizeButton_Click"/>
+
 
             <StackPanel Grid.Column="1" 
                         Grid.Row="1">
@@ -109,7 +110,7 @@
                             <Style.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter Property="Background" 
-                                            Value="#05299E"/>
+                                            Value="#333138"/>
                                 </Trigger>
                             </Style.Triggers>
                         </Style>

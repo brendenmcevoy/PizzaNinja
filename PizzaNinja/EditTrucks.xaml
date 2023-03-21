@@ -7,34 +7,41 @@
         mc:Ignorable="d"
         Title="EditTrucks" 
         Height="450" 
-        Width="800"
+        Width="800" 
         WindowStartupLocation="CenterScreen"
         WindowStyle="None" 
+        ResizeMode="NoResize"
+        AllowsTransparency="True"
+        Background="Transparent"
         MouseDown="Window_MouseDown">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="30"/>
-            <ColumnDefinition Width="105"/>
-            <ColumnDefinition Width="200"/>
-            <ColumnDefinition Width="75"/>
-            <ColumnDefinition Width="330"/>
-            <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="20"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="20"/>
-        </Grid.RowDefinitions>
-        <Button x:Name="CloseButton"
-                Grid.Column="7"
+    <Border Background="#515052"
+                BorderBrush="#000103"
+                BorderThickness="3"
+                CornerRadius="8,8,8,8">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="105"/>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="75"/>
+                <ColumnDefinition Width="340"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="20"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+            
+            <Button x:Name="CloseButton"
+                Grid.Column="6"
                 Grid.Row="0"
                 Width="20"
                 Height="20"
@@ -44,18 +51,8 @@
                 Background="Transparent"
                 BorderBrush="Transparent"
                 Click="CloseButton_Click"/>
-        <Button x:Name="MaxButton"
-                Grid.Column="6"
-                Grid.Row="0"
-                Width="20"
-                Height="20"
-                Content="[]"
-                FontFamily="Verdana"
-                FontWeight="Bold"
-                Background="Transparent"
-                BorderBrush="Transparent"
-                Click="MaxButton_Click"/>
-        <Button x:Name="MinimizeButton"
+
+            <Button x:Name="MinimizeButton"
                 Grid.Column="5"
                 Grid.Row="0"
                 Width="20"
@@ -66,25 +63,36 @@
                 Background="Transparent"
                 BorderBrush="Transparent"
                 Click="MinimizeButton_Click"/>
-        <ListView x:Name="TruckList"
-                  Grid.Column="4"
-                  Grid.Row="1"
-                  Grid.RowSpan="7"
-                  BorderBrush="Black"
-                  BorderThickness="2"
-                  Initialized="TruckList_Initialized">
-            <ListView.View>
-                <GridView ColumnHeaderToolTip="Truck Information">
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=TruckId}"
+            
+            <ListView x:Name="TruckList"
+                      Grid.Column="4"
+                      Grid.Row="1"
+                      Grid.RowSpan="7"
+                      BorderThickness="2"
+                      FontFamily="/Fonts/CarterOne.ttf #Carter One"
+                      BorderBrush="#040303"
+                      Foreground="#040303"
+                      Background="#8F8F8F"
+                      Initialized="TruckList_Initialized">
+                <ListView.Resources>
+                    <Style TargetType="GridViewColumnHeader">
+                        <Setter Property="Background" Value="#8f8f8f"/>
+                        <Setter Property="BorderBrush" Value="#040303"/>
+                    </Style>
+                </ListView.Resources>
+                <ListView.View>
+                    <GridView ColumnHeaderToolTip="Truck Information">
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=TruckId}"
                                     Header="Id"
                                     Width="40"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}"
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Name}"
                                     Header="Name"
                                     Width="100"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <Label Content="Add Truck"
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            
+            <Label Content="Add Truck"
                Grid.Column="1"
                Grid.ColumnSpan="2"
                Grid.Row="1"
@@ -92,30 +100,58 @@
                Width="210"
                HorizontalContentAlignment="Center"
                FontSize="28"
-               FontWeight="Bold"
+               FontFamily="/Fonts/CarterOne.ttf #Carter One"
                Margin="20,0,0,0"/>
-        <Label Content="Name:"
-               FontSize="20"
-               Grid.Column="1"
-               Grid.Row="3"
-               HorizontalContentAlignment="Right"/>
-        <TextBox x:Name="NameBox"
-                 Grid.Column="2"
-                 Grid.Row="3"
-                 Height="30"
-                 Width="200"
-                 HorizontalAlignment="Left"/>
-        <Button x:Name="AddButton"
+            
+            <Label Content="Name:"
+                   FontSize="18"
+                   FontFamily="/Fonts/CarterOne.ttf #Carter One"
+                   Grid.Column="1"
+                   Grid.Row="3"
+                   HorizontalContentAlignment="Right"/>
+            
+            <TextBox x:Name="NameBox"
+                     Grid.Column="2"
+                     Grid.Row="3"
+                     FontFamily="/Fonts/CarterOne.ttf #Carter One"
+                     Height="30"
+                     Width="200"
+                     HorizontalAlignment="Left"/>
+            
+            <Button x:Name="AddButton"
                 Content="Add Truck"
                 FontSize="14"
                 Grid.Column="1"
                 Grid.ColumnSpan="2"
                 Grid.Row="7"
-                Height="50"
-                Width="105"
                 Margin="0,0,110,0"
-                Click="AddButton_Click"/>
-        <Button x:Name="RemoveButton"
+                Click="AddButton_Click">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Background" Value="#F7F7FF"/>
+                    <Setter Property="Foreground" Value="#000000"/>
+                    <Setter Property="FontFamily" Value="/Fonts/CarterOne.ttf #Carter One"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" 
+                                            Value="#333138"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border Width="105" Height="50"
+                                CornerRadius="9"
+                                Background="{TemplateBinding Background}">
+                        <ContentPresenter VerticalAlignment="Center"
+                                              HorizontalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+            </Button>
+            
+            <Button x:Name="RemoveButton"
                 Content="Remove Truck"
                 FontSize="14"
                 Grid.Column="2"
@@ -124,6 +160,31 @@
                 Width="120"
                 HorizontalAlignment="Right"
                 Margin="0,0,10,0"
-                Click="RemoveButton_Click"/>
-    </Grid>
+                Click="RemoveButton_Click">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#F7F7FF"/>
+                        <Setter Property="Foreground" Value="#000000"/>
+                        <Setter Property="FontFamily" Value="/Fonts/CarterOne.ttf #Carter One"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" 
+                                            Value="#333138"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Width="120" Height="50"
+                                CornerRadius="9"
+                                Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center"
+                                              HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </Grid>
+    </Border>
 </Window>

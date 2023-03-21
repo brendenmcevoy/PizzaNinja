@@ -14,8 +14,8 @@
         AllowsTransparency="True"
         Background="Transparent"
         MouseDown="Window_MouseDown">
-    <Border Background="#6B7F82"
-                BorderBrush="#000000"
+    <Border Background="#515052"
+                BorderBrush="#000103"
                 BorderThickness="3"
                 CornerRadius="8,8,8,8">
         <Grid>
@@ -24,8 +24,7 @@
                 <ColumnDefinition Width="105"/>
                 <ColumnDefinition Width="200"/>
                 <ColumnDefinition Width="75"/>
-                <ColumnDefinition Width="330"/>
-                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="340"/>
                 <ColumnDefinition Width="20"/>
                 <ColumnDefinition Width="20"/>
             </Grid.ColumnDefinitions>
@@ -41,7 +40,7 @@
                 <RowDefinition Height="20"/>
             </Grid.RowDefinitions>
             <Button x:Name="CloseButton"
-                Grid.Column="7"
+                Grid.Column="6"
                 Grid.Row="0"
                 Width="20"
                 Height="20"
@@ -51,6 +50,7 @@
                 Background="Transparent"
                 BorderBrush="Transparent"
                 Click="CloseButton_Click"/>
+            
             <Button x:Name="MinimizeButton"
                 Grid.Column="5"
                 Grid.Row="0"
@@ -62,13 +62,23 @@
                 Background="Transparent"
                 BorderBrush="Transparent"
                 Click="MinimizeButton_Click"/>
+
             <ListView x:Name="EmployeeList"
-                  Grid.Column="4"
-                  Grid.Row="1"
-                  Grid.RowSpan="7"
-                  BorderBrush="Black"
-                  BorderThickness="2"
-                  Initialized="EmployeeList_Initialized">
+                      Grid.Column="4"
+                      Grid.Row="1"
+                      Grid.RowSpan="7"
+                      FontFamily="/Fonts/CarterOne.ttf #Carter One"
+                      BorderBrush="#040303"
+                      Foreground="#040303"
+                      Background="#8F8F8F"
+                      BorderThickness="2"
+                      Initialized="EmployeeList_Initialized">
+                <ListView.Resources>
+                    <Style TargetType="GridViewColumnHeader">
+                        <Setter Property="Background" Value="#8f8f8f"/>
+                        <Setter Property="BorderBrush" Value="#040303"/>
+                    </Style>
+                </ListView.Resources>
                 <ListView.View>
                     <GridView ColumnHeaderToolTip="Employee Information">
                         <GridViewColumn DisplayMemberBinding="{Binding Path=Id}"
@@ -79,84 +89,149 @@
                                     Width="100"/>
                         <GridViewColumn DisplayMemberBinding="{Binding Path=IsAdmin}"
                                     Header="Admin?"
-                                    Width="100"/>
+                                    Width="110"/>
                     </GridView>
                 </ListView.View>
             </ListView>
+            
             <Label Content="Add Employee"
-               Grid.Column="1"
-               Grid.ColumnSpan="2"
-               Grid.Row="1"
-               Height="45"
-               Width="210"
-               HorizontalContentAlignment="Center"
-               FontSize="28"
-               FontWeight="Bold"
-               Margin="20,0,0,0"/>
+                   Grid.Column="1"
+                   Grid.ColumnSpan="2"
+                   Grid.Row="1"
+                   Grid.RowSpan="2"
+                   Height="50"
+                   Width="210"
+                   HorizontalContentAlignment="Center"
+                   FontSize="28"
+                   FontFamily="/Fonts/CarterOne.ttf #Carter One"
+                   Margin="20,0,0,0"/>
+            
             <Label Content="Name:"
-               FontSize="20"
-               Grid.Column="1"
-               Grid.Row="3"
-               HorizontalContentAlignment="Right"/>
+                   FontSize="18"
+                   FontFamily="/Fonts/CarterOne.ttf #Carter One"
+                   Grid.Column="1"
+                   Grid.Row="3"
+                   HorizontalContentAlignment="Right"/>
+            
             <TextBox x:Name="NameBox"
-                 Grid.Column="2"
-                 Grid.Row="3"
-                 Height="30"
-                 Width="200"
-                 HorizontalAlignment="Left"/>
+                     Grid.Column="2"
+                     Grid.Row="3"
+                     Height="30"
+                     Width="200"
+                     FontFamily="/Fonts/CarterOne.ttf #Carter One"
+                     HorizontalAlignment="Left"/>
+            
             <Label Content="Admin:"
-               FontSize="20"
-               Grid.Column="1"
-               Grid.Row="4"
-               HorizontalContentAlignment="Right"/>
+                   FontSize="18"
+                   FontFamily="/Fonts/CarterOne.ttf #Carter One"
+                   Grid.Column="1"
+                   Grid.Row="4"
+                   HorizontalContentAlignment="Right"/>
+            
             <TextBox x:Name="AdminBox"
-                 Grid.Column="2"
-                 Grid.Row="4"
-                 Height="30"
-                 Width="200"
-                 HorizontalAlignment="Left"/>
+                     Grid.Column="2"
+                     Grid.Row="4"
+                     Height="30"
+                     Width="200"
+                     FontFamily="/Fonts/CarterOne.ttf #Carter One"
+                     HorizontalAlignment="Left"/>
+            
             <Label Content="Username:"
-               FontSize="20"
-               Grid.Column="1"
-               Grid.Row="5"
-               HorizontalContentAlignment="Right"/>
+                   FontSize="18"
+                   FontFamily="/Fonts/CarterOne.ttf #Carter One"
+                   Grid.Column="1"
+                   Grid.Row="5"
+                   HorizontalContentAlignment="Right"/>
+            
             <TextBox x:Name="UsernameBox"
-                 Grid.Column="2"
-                 Grid.Row="5"
-                 Height="30"
-                 Width="200"
-                 HorizontalAlignment="Left"/>
+                     Grid.Column="2"
+                     Grid.Row="5"
+                     Height="30"
+                     Width="200"
+                     FontFamily="/Fonts/CarterOne.ttf #Carter One"
+                     HorizontalAlignment="Left"/>
+            
             <Label Content="Password:"
-               FontSize="20"
-               Grid.Column="1"
-               Grid.Row="6"
-               HorizontalContentAlignment="Right"/>
+                   FontSize="18"
+                   FontFamily="/Fonts/CarterOne.ttf #Carter One"
+                   Grid.Column="1"
+                   Grid.Row="6"
+                   HorizontalContentAlignment="Right"/>
+            
             <TextBox x:Name="PasswordBox"
-                 Grid.Column="2"
-                 Grid.Row="6"
-                 Height="30"
-                 Width="200"
-                 HorizontalAlignment="Left"/>
+                     Grid.Column="2"
+                     Grid.Row="6"
+                     Height="30"
+                     Width="200"
+                     FontFamily="/Fonts/CarterOne.ttf #Carter One"
+                     HorizontalAlignment="Left"/>
+            
             <Button x:Name="AddButton"
                 Content="Add Employee"
                 FontSize="14"
                 Grid.Column="1"
                 Grid.ColumnSpan="2"
                 Grid.Row="7"
-                Height="50"
-                Width="105"
-                Margin="0,0,110,0"
-                Click="AddButton_Click"/>
+                Margin="0,0,150,0"
+                Click="AddButton_Click">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Background" Value="#F7F7FF"/>
+                    <Setter Property="Foreground" Value="#000000"/>
+                    <Setter Property="FontFamily" Value="/Fonts/CarterOne.ttf #Carter One"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" 
+                                            Value="#333138"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border Width="150" Height="40"
+                                CornerRadius="9"
+                                Background="{TemplateBinding Background}">
+                        <ContentPresenter VerticalAlignment="Center"
+                                              HorizontalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+            </Button>
+
             <Button x:Name="RemoveButton"
                 Content="Remove Employee"
                 FontSize="14"
                 Grid.Column="2"
+                    Grid.ColumnSpan="2"
                 Grid.Row="7"
-                Height="50"
-                Width="120"
                 HorizontalAlignment="Right"
-                Margin="0,0,10,0"
-                Click="RemoveButton_Click"/>
+                Margin="0,0,60,0"
+                Click="RemoveButton_Click">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#F7F7FF"/>
+                        <Setter Property="Foreground" Value="#000000"/>
+                        <Setter Property="FontFamily" Value="/Fonts/CarterOne.ttf #Carter One"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" 
+                                            Value="#333138"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Width="150" Height="40"
+                                CornerRadius="9"
+                                Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center"
+                                              HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
         </Grid>
     </Border>
 </Window>

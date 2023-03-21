@@ -7,32 +7,39 @@
         mc:Ignorable="d"
         Title="JobsUI" 
         Height="450" 
-        Width="800"
+        Width="750" 
         WindowStartupLocation="CenterScreen"
-        WindowStyle="None"
-        MouseDown="Window_MouseDown">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="30"/>
-            <ColumnDefinition Width="100"/>
-            <ColumnDefinition Width="100"/>
-            <ColumnDefinition Width="300"/>
-            <ColumnDefinition Width="80"/>
-            <ColumnDefinition Width="120"/>
-            <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="20"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="120"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="20"/>
-        </Grid.RowDefinitions>
-        <Button x:Name="CloseButton"
-                Grid.Column="8"
+        WindowStyle="None" 
+        ResizeMode="NoResize"
+        MouseDown="Window_MouseDown"
+        AllowsTransparency="True"
+        Background="Transparent">
+    <Border Background="#515052"
+                BorderBrush="#000103"
+                BorderThickness="3"
+                CornerRadius="8,8,8,8">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="90"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="20"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="120"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+            
+            <Button x:Name="CloseButton"
+                Grid.Column="7"
                 Grid.Row="0"
                 Width="20"
                 Height="20"
@@ -42,18 +49,8 @@
                 Background="Transparent"
                 BorderBrush="Transparent"
                 Click="CloseButton_Click"/>
-        <Button x:Name="MaxButton"
-                Grid.Column="7"
-                Grid.Row="0"
-                Width="20"
-                Height="20"
-                Content="[]"
-                FontFamily="Verdana"
-                FontWeight="Bold"
-                Background="Transparent"
-                BorderBrush="Transparent"
-                Click="MaxButton_Click"/>
-        <Button x:Name="MinimizeButton"
+
+            <Button x:Name="MinimizeButton"
                 Grid.Column="6"
                 Grid.Row="0"
                 Width="20"
@@ -64,56 +61,63 @@
                 Background="Transparent"
                 BorderBrush="Transparent"
                 Click="MinimizeButton_Click"/>
-        <TextBlock x:Name="NameBox"
-                   Grid.Row="1"
-                   Grid.Column="3"
-                   Height="40"
-                   Width="300"
-                   VerticalAlignment="Top"
-                   TextAlignment="Center"
-                   FontSize="20"               
-                   FontWeight="Bold"
-                   Margin="0,10,0,0"
-                   Text="{Binding Name}"/>
-        <Label Content="Notes:"
+            
+            <TextBlock x:Name="NameBox"
+                       Grid.Row="1"
+                       Grid.Column="3"
+                       Height="40"
+                       Width="300"
+                       VerticalAlignment="Top"
+                       TextAlignment="Center"
+                       FontSize="20"
+                       FontFamily="/Fonts/CarterOne.ttf #Carter One"
+                       Margin="0,10,0,0"
+                       Text="{Binding Name}"/>
+            
+            <Label Content="Notes:"
                Grid.Row="1"
                Grid.ColumnSpan="3"
                Grid.Column="1"
                FontSize="20"
-               FontWeight="Bold"
+               FontFamily="/Fonts/CarterOne.ttf #Carter One"
                VerticalAlignment="Bottom"
                HorizontalAlignment="Center"
                Margin="0,0,80,0"/>
-        <Border BorderThickness="2" 
-                BorderBrush="Black"
-                Grid.Row="2"
-                Grid.RowSpan="2"
-                Grid.Column="1"
-                Grid.ColumnSpan="3"
-                Width="200"
-                Padding="5,5,5,5"
-                Height="220"
-                Margin="0,0,80,0">
-            <TextBox x:Name="NotesBox"
-                     Grid.Row="2"
-                     Grid.Column="1"
-                     Grid.ColumnSpan="3"
-                     Width="180"
-                     Height="200"
-                     TextWrapping="Wrap"
-                     AcceptsReturn="True"
-                     AcceptsTab="True"/>
-        </Border>
-        <Label Content="Description:"
+            
+            <Border BorderThickness="2" 
+                    BorderBrush="Black"
+                    Grid.Row="2"
+                    Grid.RowSpan="2"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="3"
+                    Width="200"
+                    Padding="5,5,5,5"
+                    Height="220"
+                    Margin="0,0,80,0">
+                
+                <TextBox x:Name="NotesBox"
+                         Grid.Row="2"
+                         Grid.Column="1"
+                         Grid.ColumnSpan="3"
+                         FontFamily="/Fonts/CarterOne.ttf #Carter One"
+                         Width="180"
+                         Height="200"
+                         TextWrapping="Wrap"
+                         AcceptsReturn="True"
+                         AcceptsTab="True"/>
+            </Border>
+
+            <Label Content="Description:"
                Grid.Row="1"
                Grid.ColumnSpan="3"
                Grid.Column="3"
                FontSize="20"
-               FontWeight="Bold"
+                   FontFamily="/Fonts/CarterOne.ttf #Carter One"
                VerticalAlignment="Bottom"
                HorizontalAlignment="Center"
-               Margin="65,0,0,0"/>
-        <Border BorderThickness="2" 
+               Margin="105,0,0,0"/>
+
+            <Border BorderThickness="2" 
                 BorderBrush="Black"
                 Grid.Row="2"
                 Grid.RowSpan="2"
@@ -123,25 +127,53 @@
                 Padding="5,5,5,5"
                 Width="200"
                 Height="220">
-            <TextBlock x:Name="DescriptionBox"
-                       Grid.Row="2"
-                       Grid.Column="1"
-                       Grid.ColumnSpan="2"
-                       Width="180"
-                       Height="200"
-                       TextWrapping="Wrap"
-                       Text="{Binding Description}"/>
-        </Border>
-        <Button x:Name="SubmitButton"
+                <TextBox x:Name="DescriptionBox"
+                         Grid.Row="2"
+                         Grid.Column="1"
+                         Grid.ColumnSpan="2"
+                         Width="180"
+                         Height="200"
+                         FontFamily="/Fonts/CarterOne.ttf #Carter One"
+                         TextWrapping="Wrap"
+                         Text="{Binding Description}"/>
+            </Border>
+
+            <Button x:Name="SubmitButton"
                 Content="Submit"
                 FontWeight="SemiBold"
                 FontSize="30"
                 Grid.Column="3"
                 Grid.Row="4"
-                Height="50"
-                Width="150"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Click="SubmitButton_Click"/>
-    </Grid>
+                Click="SubmitButton_Click">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" 
+                                    Value="#F7F7FF"/>
+                        <Setter Property="Foreground"
+                                    Value="#000000"/>
+                        <Setter Property="FontFamily" 
+                                    Value="/Fonts/CarterOne.ttf #Carter One"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" 
+                                            Value="#333138"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Width="150" Height="50"
+                                    CornerRadius="9"
+                                    Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" 
+                                                  HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </Grid>
+    </Border>
 </Window>

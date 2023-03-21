@@ -86,11 +86,6 @@ namespace PizzaNinja
             this.Close();
         }
 
-        private void MaxButton_Click(object sender, RoutedEventArgs e)
-        {
-            WindowState = WindowState.Maximized;
-        }
-
         private void MinimizeButton_Click(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Minimized;
