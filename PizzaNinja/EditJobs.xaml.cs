@@ -26,6 +26,7 @@ namespace PizzaNinja
         private IConnectionFactory conn;
         private UnitOfWork uow;
         private ObservableCollection<Job> jobs;
+        private bool edit;
         public EditJobs()
         {
             conn = new DatabaseConnectionFactory();
@@ -33,6 +34,7 @@ namespace PizzaNinja
             jobs = new ObservableCollection<Job>();
             InitializeComponent();
             JobList.ItemsSource = jobs;
+            edit = false;
         }
 
         private async void JobList_Initialized(object sender, EventArgs e)
@@ -52,17 +54,51 @@ namespace PizzaNinja
                 jobs.Add(j);
             }
         }
-
-        private void AddButton_Click(object sender, RoutedEventArgs e)
+        private void Edit_Click(object sender, RoutedEventArgs e)
         {
-            Job job = new Job();
-            job.JobId = int.Parse(JobIdBox.Text);
-            job.Name = NameBox.Text;
-            job.Description = DescriptionBox.Text;
-            job.TruckId = int.Parse(TruckIdBox.Text);
+            ClearBoxes();
+            var job = JobList.SelectedItem as Job;
 
-            var output = uow.Jobs.AddAsync(job);    
-            RefreshList();
+            if (job != null)
+            {
+                JobIdBox.Text = job.JobId.ToString();
+                NameBox.Text = job.Name;
+                DescriptionBox.Text = job.Description;
+                TruckIdBox.Text = job.TruckId.ToString();
+                edit = true;
+            }
+        }
+
+
+        private async void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(edit == true)
+            {
+                Job job = JobList.SelectedItem as Job;
+
+                if (job != null)
+                {
+                    job.JobId = int.Parse(JobIdBox.Text);
+                    job.Name = NameBox.Text;
+                    job.Description = DescriptionBox.Text;
+                    job.TruckId = int.Parse(TruckIdBox.Text);
+
+                    var output = await Task.Run(() => uow.Jobs.UpdateAsync(job));
+                    RefreshList();
+                    edit = false;
+                }
+            }
+            else
+            {
+                Job job = new Job();
+                job.JobId = int.Parse(JobIdBox.Text);
+                job.Name = NameBox.Text;
+                job.Description = DescriptionBox.Text;
+                job.TruckId = int.Parse(TruckIdBox.Text);
+
+                var output = uow.Jobs.AddAsync(job);
+                RefreshList();
+            }         
         }
 
         private async void RemoveButton_Click(object sender, RoutedEventArgs e)
@@ -70,6 +106,13 @@ namespace PizzaNinja
             var job = JobList.SelectedItem as Job;
             var output = await Task.Run(() => uow.Jobs.DeleteAsync(job.JobId));
             RefreshList();
+        }
+        private void ClearBoxes()
+        {
+            JobIdBox.Text = string.Empty;
+            NameBox.Text = string.Empty;
+            DescriptionBox.Text = string.Empty;
+            TruckIdBox.Text = string.Empty;
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -90,5 +133,7 @@ namespace PizzaNinja
         {
             WindowState = WindowState.Minimized;
         }
+
+        
     }
 }

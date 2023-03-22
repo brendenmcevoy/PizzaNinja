@@ -92,7 +92,7 @@
                 </ListView.View>
             </ListView>
             
-            <Label Content="Add Truck"
+            <Label Content="Edit Trucks"
                Grid.Column="1"
                Grid.ColumnSpan="2"
                Grid.Row="1"
@@ -103,11 +103,48 @@
                FontFamily="/Fonts/CarterOne.ttf #Carter One"
                Margin="20,0,0,0"/>
             
+            <Button x:Name="Edit"
+                    Grid.Column="2"
+                    Grid.Row="2"
+                    Content="Edit Selected"
+                    FontFamily="/Fonts/CarterOne.ttf #Carter One"
+                    FontSize="14"
+                    HorizontalAlignment="Left"
+                    VerticalContentAlignment="Center"
+                    VerticalAlignment="Center"
+                    Margin="20,20,0,0" 
+                    Click="Edit_Click">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#F7F7FF"/>
+                        <Setter Property="Foreground" Value="#000000"/>
+                        <Setter Property="FontFamily" Value="/Fonts/CarterOne.ttf #Carter One"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" 
+                                            Value="#333138"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Width="100" Height="25"
+                                CornerRadius="4"
+                                Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center"
+                                              HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
             <Label Content="Name:"
                    FontSize="18"
                    FontFamily="/Fonts/CarterOne.ttf #Carter One"
                    Grid.Column="1"
                    Grid.Row="3"
+                   VerticalAlignment="Bottom"
                    HorizontalContentAlignment="Right"/>
             
             <TextBox x:Name="NameBox"
@@ -116,16 +153,18 @@
                      FontFamily="/Fonts/CarterOne.ttf #Carter One"
                      Height="30"
                      Width="200"
+                     VerticalAlignment="Bottom"
                      HorizontalAlignment="Left"/>
             
             <Button x:Name="AddButton"
-                Content="Add Truck"
-                FontSize="14"
-                Grid.Column="1"
-                Grid.ColumnSpan="2"
-                Grid.Row="7"
-                Margin="0,0,110,0"
-                Click="AddButton_Click">
+                    Content="Save Truck"
+                    FontSize="14"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    Grid.Row="6"
+                    Grid.RowSpan="2"
+                    Margin="0,0,110,0"
+                    Click="AddButton_Click">
             <Button.Style>
                 <Style TargetType="Button">
                     <Setter Property="Background" Value="#F7F7FF"/>
@@ -155,7 +194,8 @@
                 Content="Remove Truck"
                 FontSize="14"
                 Grid.Column="2"
-                Grid.Row="7"
+                Grid.Row="6"
+                    Grid.RowSpan="2"
                 Height="50"
                 Width="120"
                 HorizontalAlignment="Right"

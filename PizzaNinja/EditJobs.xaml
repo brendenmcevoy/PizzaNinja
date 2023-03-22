@@ -64,9 +64,11 @@
                 Click="MinimizeButton_Click"/>
         
         <ListView x:Name="JobList"
-                  Grid.Column="4"
+                  Grid.Column="3"
                   Grid.Row="1"
+                  Grid.ColumnSpan="3"
                   Grid.RowSpan="7"
+                  Margin="40,0,0,0"
                   FontFamily="/Fonts/CarterOne.ttf #Carter One"
                   BorderBrush="#040303"
                   Foreground="#040303"
@@ -85,18 +87,18 @@
                                     Width="45"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Name}"
                                     Header="Name"
-                                    Width="70"/>
+                                    Width="80"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Description}"
                                     Header="Description"
-                                    Width="165"/>
+                                    Width="195"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=TruckId}"
                                     Header="TruckId"
-                                    Width="54"/>
+                                    Width="64"/>
                 </GridView>
             </ListView.View>
         </ListView>
         
-        <Label Content="Add Job"
+        <Label Content="Edit Jobs"
                Grid.Column="1"
                Grid.ColumnSpan="2"
                Grid.Row="1"
@@ -106,17 +108,56 @@
                FontSize="28"
                FontFamily="/Fonts/CarterOne.ttf #Carter One"
                Margin="50,0,0,0"/>
-        
-        <Label Content="JobId:"
+            
+            <Button x:Name="Edit"
+                    Grid.Column="2"
+                    Grid.Row="2"
+                    Content="Edit Selected"
+                    FontFamily="/Fonts/CarterOne.ttf #Carter One"
+                    FontSize="14"
+                    VerticalContentAlignment="Center"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Center"
+                    Margin="0,0,55,0"
+                    Click="Edit_Click">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#F7F7FF"/>
+                        <Setter Property="Foreground" Value="#000000"/>
+                        <Setter Property="FontFamily" Value="/Fonts/CarterOne.ttf #Carter One"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" 
+                                            Value="#333138"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Width="100" Height="25"
+                                CornerRadius="4"
+                                Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center"
+                                              HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+            <Label Content="JobId:"
                FontSize="18"
                FontFamily="/Fonts/CarterOne.ttf #Carter One"
                Grid.Column="1"
                Grid.Row="2"
+               Grid.RowSpan="2"
+               VerticalAlignment="Center"
                HorizontalContentAlignment="Right"/>
         
         <TextBox x:Name="JobIdBox"
                  Grid.Column="2"
                  Grid.Row="2"
+                 Grid.RowSpan="2"
                  FontFamily="/Fonts/CarterOne.ttf #Carter One"
                  Height="30"
                  Width="200"
@@ -127,11 +168,14 @@
                FontFamily="/Fonts/CarterOne.ttf #Carter One"
                Grid.Column="1"
                Grid.Row="3"
+               Grid.RowSpan="2"
+               VerticalAlignment="Center"
                HorizontalContentAlignment="Right"/>
         
         <TextBox x:Name="NameBox"
                  Grid.Column="2"
                  Grid.Row="3"
+                 Grid.RowSpan="2"
                  FontFamily="/Fonts/CarterOne.ttf #Carter One"
                  Height="30"
                  Width="200"
@@ -141,14 +185,15 @@
                FontSize="16"
                FontFamily="/Fonts/CarterOne.ttf #Carter One"
                Grid.Column="1"
-               Grid.Row="4"
+               Grid.Row="5"
                HorizontalContentAlignment="Right"/>
         
         <TextBox x:Name="DescriptionBox"
                  Grid.Column="2"
                  Grid.Row="4"
-                 Grid.RowSpan="2"
+                 Grid.RowSpan="3"
                  TextWrapping="Wrap"
+                 Margin="0,18,0,0"
                  FontFamily="/Fonts/CarterOne.ttf #Carter One"
                  Height="100"
                  Width="200"
@@ -158,24 +203,27 @@
                FontSize="18"
                FontFamily="/Fonts/CarterOne.ttf #Carter One"
                Grid.Column="1"
-               Grid.Row="6"
+               Grid.Row="7"
+               VerticalAlignment="Top"
                HorizontalContentAlignment="Right"/>
         
         <TextBox x:Name="TruckIdBox"
                  Grid.Column="2"
-                 Grid.Row="6"
+                 Grid.Row="7"
                  FontFamily="/Fonts/CarterOne.ttf #Carter One"
                  Height="30"
                  Width="200"
+                 VerticalAlignment="Top"
                  HorizontalAlignment="Left"/>
         
         <Button x:Name="AddButton"
-                Content="Add Job"
+                Content="Save Job"
                 FontSize="14"
                 Grid.Column="1"
                 Grid.ColumnSpan="2"
                 Grid.Row="7"
                 Margin="0,0,110,0"
+                VerticalAlignment="Bottom"
                 Click="AddButton_Click">
             <Button.Style>
                 <Style TargetType="Button">
@@ -208,6 +256,7 @@
                 Grid.Column="2"
                 Grid.Row="7"
                 HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
                 Margin="0,0,10,0"
                 Click="RemoveButton_Click">
                 <Button.Style>

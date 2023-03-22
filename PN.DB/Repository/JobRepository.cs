@@ -69,14 +69,26 @@ namespace PN.DB.Repository
             }
         }
 
-        public Task<Job> GetByIdAsync(int id)
+        public async Task<Job> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            using (var connection = _connectionFactory.GetConnection)
+            {
+                var sql = "SELECT * FROM Jobs WHERE Id = @id";
+                connection.Open();
+                var result = await Task.Run(() => connection.QueryFirstOrDefault<Job>(sql, new { Id = id }));
+                return result;
+            }
         }
 
-        public Task<int> UpdateAsync(Job entity)
+        public async Task<int> UpdateAsync(Job entity)
         {
-            throw new NotImplementedException();
+            using (var connection = _connectionFactory.GetConnection)
+            {
+                var sql = "UPDATE Jobs SET JobId = @JobId, Name = @Name, Description = @Description, TruckId = @TruckId WHERE Id = @Id";
+                connection.Open();
+                var result = await Task.Run(() => connection.Execute(sql, entity));
+                return result;
+            }
         }
     }
 }

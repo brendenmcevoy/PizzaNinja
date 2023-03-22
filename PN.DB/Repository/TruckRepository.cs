@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using PN.DB.Interfaces;
+using PN.Logic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,14 +50,26 @@ namespace PN.DB.Repository
             }
         }
 
-        public Task<Truck> GetByIdAsync(int id)
+        public async Task<Truck> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            using (var connection = _connectionFactory.GetConnection)
+            {
+                var sql = "SELECT * FROM Jobs WHERE TruckId = @Truckid";
+                connection.Open();
+                var result = await Task.Run(() => connection.QueryFirstOrDefault<Truck>(sql, new { TruckId = id }));
+                return result;
+            }
         }
 
-        public Task<int> UpdateAsync(Truck entity)
+        public async Task<int> UpdateAsync(Truck entity)
         {
-            throw new NotImplementedException();
+            using (var connection = _connectionFactory.GetConnection)
+            {
+                var sql = "UPDATE Truck SET Name = @Name WHERE TruckId = @TruckId";
+                connection.Open();
+                var result = await Task.Run(() => connection.Execute(sql, entity));
+                return result;
+            }
         }
     }
 }

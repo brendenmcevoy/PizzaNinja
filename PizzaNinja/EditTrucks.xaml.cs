@@ -26,6 +26,7 @@ namespace PizzaNinja
         private IConnectionFactory conn;
         private UnitOfWork uow;
         private ObservableCollection<Truck> trucks;
+        private bool edit;
         public EditTrucks()
         {
             conn = new DatabaseConnectionFactory();
@@ -33,6 +34,7 @@ namespace PizzaNinja
             InitializeComponent();
             trucks = new ObservableCollection<Truck>();
             TruckList.ItemsSource = trucks;
+            edit = false;
         }
         private async void TruckList_Initialized(object sender, EventArgs e)
         {
@@ -50,22 +52,51 @@ namespace PizzaNinja
                 trucks.Add(t);
             }
         }
+        private void Edit_Click(object sender, RoutedEventArgs e)
+        {
+            NameBox.Text = string.Empty;
+            var truck = TruckList.SelectedItem as Truck;    
+
+            if(truck != null)
+            {
+                NameBox.Text = truck.Name;
+                edit = true;
+            }
+        }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            Truck truck = new Truck();
-            truck.Name = NameBox.Text;
-            uow.Trucks.AddAsync(truck);
-            RefreshList();
+            if(edit == true)
+            {
+                Truck truck = TruckList.SelectedItem as Truck;
+                if(truck != null)
+                {
+                    truck.Name = NameBox.Text;
+                    uow.Trucks.UpdateAsync(truck);
+                    RefreshList();
+                    edit = false;
+                }
+            }
+            else
+            {
+                Truck truck = new Truck();
+                truck.Name = NameBox.Text;
+                uow.Trucks.AddAsync(truck);
+                RefreshList();
+            }
+            
         }
 
         private async void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
             Truck truck = TruckList.SelectedItem as Truck;
-            var output = await Task.Run(() => uow.Trucks.DeleteAsync(truck.TruckId));
-            RefreshList();
+            if (truck != null)
+            {
+                var output = await Task.Run(() => uow.Trucks.DeleteAsync(truck.TruckId));
+                RefreshList();
+            }
+            
         }
-
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if(e.LeftButton == MouseButtonState.Pressed)
@@ -83,5 +114,7 @@ namespace PizzaNinja
         {
             WindowState = WindowState.Minimized;
         }
+
+        
     }
 }

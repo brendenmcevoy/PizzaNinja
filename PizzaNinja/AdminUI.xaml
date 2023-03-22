@@ -258,7 +258,7 @@
                       Grid.Row="2"
                       Grid.RowSpan="3"
                       Grid.Column="1"
-                      Grid.ColumnSpan="5"
+                      Grid.ColumnSpan="7"
                       Width="700"
                       Height="300"
                       FontFamily="/Fonts/CarterOne.ttf #Carter One"
@@ -270,7 +270,7 @@
                       BorderBrush="#040303"
                       CanUserResizeColumns="False"
                       CanUserResizeRows="False"
-                      Visibility="Hidden"
+                      Visibility="Visible"
                       SelectionMode="Single">
                 <DataGrid.Resources>
                     <Style TargetType="{x:Type DataGridColumnHeader}">
@@ -284,7 +284,7 @@
                     <DataGridTextColumn Header="Truck Id" Width="55" Binding="{Binding TruckId}"/>
                     <DataGridTextColumn Header="Employee Id" Width="80" Binding="{Binding EmployeeId}"/>
                     <DataGridTextColumn Header="Description" Width="350" Binding="{Binding Description}"/>
-                    <DataGridTextColumn Header="Notes" Width="*" Binding="{Binding Notes}"/>
+                    <DataGridTextColumn Header="Notes" Width="160" Binding="{Binding Notes}"/>
                 </DataGrid.Columns>
                 <DataGrid.RowStyle>
                     <Style TargetType="DataGridRow">

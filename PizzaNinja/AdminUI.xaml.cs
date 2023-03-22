@@ -95,6 +95,7 @@ namespace PizzaNinja
         private async void CompletedJobsButton_Click(object sender, RoutedEventArgs e)
         {
             CompletedJobsDisplay.Visibility = Visibility.Visible;
+            JobsDisplay.Visibility = Visibility.Hidden;
 
             CompletedJobsDisplay.Items.Clear();
 

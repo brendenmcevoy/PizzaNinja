@@ -26,36 +26,22 @@ namespace PizzaNinja
     {
         private IConnectionFactory conn;
         private UnitOfWork uow;
-        private Employee _adminEmployee;
         private ObservableCollection<Employee> employees;
+        private bool edit;
         public EditEmployees(Employee adminEmployee)
         {
             conn = new DatabaseConnectionFactory();
             uow = new UnitOfWork(conn);
-            _adminEmployee = adminEmployee;
             InitializeComponent();
             employees = new ObservableCollection<Employee>();
             EmployeeList.ItemsSource = employees;
+            edit = false;
         } 
         private async void EmployeeList_Initialized(object sender, EventArgs e)
         {
             foreach (Employee em in new ObservableCollection<Employee>(await Task.Run(() => uow.Employees.GetAllAsync().Result)))
             {
                 employees.Add(em);
-            }
-        }
-
-        private async void EmployeeList_SelectionChanged(object sender, SelectionChangedEventArgs e) 
-        {           
-
-            if(Edit.IsChecked == true)
-            {
-                var employee = EmployeeList.SelectedItem as Employee;
-                Employee emp = await Task.Run(() => uow.Employees.GetEmployeeByUsernameAsync(employee.Username).Result);
-                NameBox.Text = emp.Name;
-                AdminBox.Text = emp.IsAdmin.ToString();
-                UsernameBox.Text = emp.Username;
-                PasswordBox.Text = emp.Password;
             }
         }
         private async void RefreshList()
@@ -69,16 +55,21 @@ namespace PizzaNinja
         }
         private async void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            if (Edit.IsChecked == true)
+            if (edit == true)
             {
-                Employee employee = new Employee();
-                employee.Name = NameBox.Text;
-                employee.Username = NameBox.Text;
-                employee.Password = PasswordBox.Text;
-                employee.IsAdmin = bool.Parse(AdminBox.Text);
+                Employee employee = EmployeeList.SelectedItem as Employee;
 
-                var output = await Task.Run(() => uow.Employees.UpdateAsync(employee));
-                RefreshList();
+                if(employee != null)
+                {
+                    employee.Name = NameBox.Text;
+                    employee.Username = NameBox.Text;
+                    employee.Password = PasswordBox.Text;
+                    employee.IsAdmin = bool.Parse(AdminBox.Text);
+
+                    var output = await Task.Run(() => uow.Employees.UpdateAsync(employee));
+                    RefreshList();
+                    edit = false;
+                }              
             }
             else 
             {
@@ -90,18 +81,32 @@ namespace PizzaNinja
 
                 var output = await Task.Run(() => uow.Employees.AddAsync(employee));
                 RefreshList();
-            }
-            
+            }           
         }
         private void Edit_Click(object sender, RoutedEventArgs e)
         {
-           ClearBoxes();
+            ClearBoxes();
+            var employee = EmployeeList.SelectedItem as Employee;
+
+            if(employee != null) 
+            {
+                NameBox.Text = employee.Name;
+                UsernameBox.Text = employee.Username;
+                PasswordBox.Text = employee.Password;
+                AdminBox.Text = employee.IsAdmin.ToString();
+                edit = true;
+            }
+            
         }
         private async void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
             Employee employee = EmployeeList.SelectedItem as Employee;
-            var output = await Task.Run(() => uow.Employees.DeleteAsync(employee.Id));
-            RefreshList();
+            if(employee != null) 
+            {
+                var output = await Task.Run(() => uow.Employees.DeleteAsync(employee.Id));
+                RefreshList();
+            }
+            
         }
         private void ClearBoxes()
         {
