@@ -44,6 +44,20 @@ namespace PizzaNinja
                 employees.Add(em);
             }
         }
+
+        private async void EmployeeList_SelectionChanged(object sender, SelectionChangedEventArgs e) 
+        {           
+
+            if(Edit.IsChecked == true)
+            {
+                var employee = EmployeeList.SelectedItem as Employee;
+                Employee emp = await Task.Run(() => uow.Employees.GetEmployeeByUsernameAsync(employee.Username).Result);
+                NameBox.Text = emp.Name;
+                AdminBox.Text = emp.IsAdmin.ToString();
+                UsernameBox.Text = emp.Username;
+                PasswordBox.Text = emp.Password;
+            }
+        }
         private async void RefreshList()
         {
             employees.Clear();
@@ -55,13 +69,33 @@ namespace PizzaNinja
         }
         private async void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            Employee employee = new Employee();
-            employee.Name = NameBox.Text;
-            employee.Username = NameBox.Text;
-            employee.Password = PasswordBox.Text;
-            employee.IsAdmin = bool.Parse(AdminBox.Text);
-            var output = await Task.Run(() => uow.Employees.AddAsync(employee));
-            RefreshList();
+            if (Edit.IsChecked == true)
+            {
+                Employee employee = new Employee();
+                employee.Name = NameBox.Text;
+                employee.Username = NameBox.Text;
+                employee.Password = PasswordBox.Text;
+                employee.IsAdmin = bool.Parse(AdminBox.Text);
+
+                var output = await Task.Run(() => uow.Employees.UpdateAsync(employee));
+                RefreshList();
+            }
+            else 
+            {
+                Employee employee = new Employee();
+                employee.Name = NameBox.Text;
+                employee.Username = NameBox.Text;
+                employee.Password = PasswordBox.Text;
+                employee.IsAdmin = bool.Parse(AdminBox.Text);
+
+                var output = await Task.Run(() => uow.Employees.AddAsync(employee));
+                RefreshList();
+            }
+            
+        }
+        private void Edit_Click(object sender, RoutedEventArgs e)
+        {
+           ClearBoxes();
         }
         private async void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
@@ -69,7 +103,13 @@ namespace PizzaNinja
             var output = await Task.Run(() => uow.Employees.DeleteAsync(employee.Id));
             RefreshList();
         }
-
+        private void ClearBoxes()
+        {
+            NameBox.Text = string.Empty;
+            AdminBox.Text = string.Empty;
+            UsernameBox.Text = string.Empty;
+            PasswordBox.Text = string.Empty;
+        }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -85,6 +125,6 @@ namespace PizzaNinja
         private void MinimizeButton_Click(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Minimized;
-        }
+        }     
     }
 }

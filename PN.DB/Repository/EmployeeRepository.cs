@@ -50,9 +50,15 @@ namespace PN.DB.Repository
             }
         }
 
-        public Task<Employee> GetByIdAsync(int id)
+        public async Task<Employee> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            using (var connection = _connectionFactory.GetConnection)
+            {
+                var sql = "SELECT * FROM Employee WHERE Id = @id";
+                connection.Open();
+                var result = await Task.Run(() => connection.QueryFirstOrDefault<Employee>(sql, new { Id = id}));
+                return result;
+            }
         }
 
         public async Task<string> GetPasswordAsync(string password)
@@ -77,9 +83,15 @@ namespace PN.DB.Repository
             }
         }
 
-        public Task<int> UpdateAsync(Employee entity)
+        public async Task<int> UpdateAsync(Employee entity)
         {
-            throw new NotImplementedException();
+            using (var connection = _connectionFactory.GetConnection)
+            {
+                var sql = "UPDATE Employee SET Name = @Name, IsAdmin = @IsAdmin, Username = @Username, Password = @Password WHERE Id = @Id";
+                connection.Open();
+                var result = await Task.Run(() => connection.Execute(sql, entity));
+                return result;
+            }
         }
 
         public async Task<Employee> GetEmployeeByUsernameAsync(string username)
