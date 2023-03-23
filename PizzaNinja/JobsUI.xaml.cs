@@ -37,6 +37,7 @@ namespace PizzaNinja
             InitializeComponent();
             NameBox.DataContext = _job; 
             DescriptionBox.DataContext = _job;
+            NotesBox.Focus();
         }
         private async void SubmitButton_Click(object sender, RoutedEventArgs e)
         {

@@ -46,7 +46,16 @@ namespace PizzaNinja
             {
                 trucks.Add(t);
             }
-        }      
+        }
+        public async void RefreshList()
+        {
+            JobsDisplay.Items.Clear();
+
+            foreach (Job j in new ObservableCollection<Job>(await Task.Run(() => uow.Jobs.GetAllAsync().Result)))
+            {
+                JobsDisplay.Items.Add(j);
+            }
+        }
         private async void TruckBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             JobsDisplay.Items.Clear();

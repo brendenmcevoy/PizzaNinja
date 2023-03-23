@@ -25,87 +25,89 @@ namespace PizzaNinja
     {
         private IConnectionFactory conn;
         private UnitOfWork uow;
-        private ObservableCollection<Job> jobs;
-        private bool edit;
         public EditJobs()
         {
             conn = new DatabaseConnectionFactory();
             uow = new UnitOfWork(conn);
-            jobs = new ObservableCollection<Job>();
             InitializeComponent();
-            JobList.ItemsSource = jobs;
-            edit = false;
+            JobIdBox.Focus();
+            SaveButton.IsEnabled = false;
         }
 
         private async void JobList_Initialized(object sender, EventArgs e)
         {
             foreach (Job j in new ObservableCollection<Job>(await Task.Run(() => uow.Jobs.GetAllAsync().Result)))
             {
-                jobs.Add(j);
+                JobList.Items.Add(j);
             }
         }
 
         private async void RefreshList()
         {
-            jobs.Clear();
+            JobList.Items.Clear();
 
             foreach (Job j in new ObservableCollection<Job>(await Task.Run(() => uow.Jobs.GetAllAsync().Result)))
             {
-                jobs.Add(j);
+                JobList.Items.Add(j);
             }
         }
-        private void Edit_Click(object sender, RoutedEventArgs e)
+        private async void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            Job job = new Job();
+            job.JobId = int.Parse(JobIdBox.Text);
+            job.Name = NameBox.Text;
+            job.Description = DescriptionBox.Text;
+            job.TruckId = int.Parse(TruckIdBox.Text);
+
+            await Task.Run(() => uow.Jobs.AddAsync(job));
+            RefreshList();
+            ClearBoxes();
+            JobIdBox.Focus();
+        }
+
+        private async void RemoveButton_Click(object sender, RoutedEventArgs e)
+        {
+            var job = JobList.SelectedItem as Job;
+            if(job != null)
+            {
+                await Task.Run(() => uow.Jobs.DeleteAsync(job.JobId));
+                RefreshList();
+                ClearBoxes();
+                JobIdBox.Focus();
+            }          
+        }
+        private void EditButton_Click(object sender, RoutedEventArgs e)
         {
             ClearBoxes();
-            var job = JobList.SelectedItem as Job;
+            Job job = JobList.SelectedItem as Job;
 
             if (job != null)
             {
                 JobIdBox.Text = job.JobId.ToString();
                 NameBox.Text = job.Name;
                 DescriptionBox.Text = job.Description;
-                TruckIdBox.Text = job.TruckId.ToString();
-                edit = true;
+                TruckIdBox.Text = job.TruckId.ToString();         
             }
+
+            SaveButton.IsEnabled = true;
         }
-
-
-        private async void AddButton_Click(object sender, RoutedEventArgs e)
+        private async void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            if(edit == true)
-            {
-                Job job = JobList.SelectedItem as Job;
+            Job job = JobList.SelectedItem as Job;
 
-                if (job != null)
-                {
-                    job.JobId = int.Parse(JobIdBox.Text);
-                    job.Name = NameBox.Text;
-                    job.Description = DescriptionBox.Text;
-                    job.TruckId = int.Parse(TruckIdBox.Text);
-
-                    var output = await Task.Run(() => uow.Jobs.UpdateAsync(job));
-                    RefreshList();
-                    edit = false;
-                }
-            }
-            else
+            if (job != null)
             {
-                Job job = new Job();
                 job.JobId = int.Parse(JobIdBox.Text);
                 job.Name = NameBox.Text;
                 job.Description = DescriptionBox.Text;
                 job.TruckId = int.Parse(TruckIdBox.Text);
 
-                var output = uow.Jobs.AddAsync(job);
+                await Task.Run(() => uow.Jobs.UpdateAsync(job));
+                ClearBoxes();
+                JobIdBox.Focus();
                 RefreshList();
-            }         
-        }
-
-        private async void RemoveButton_Click(object sender, RoutedEventArgs e)
-        {
-            var job = JobList.SelectedItem as Job;
-            var output = await Task.Run(() => uow.Jobs.DeleteAsync(job.JobId));
-            RefreshList();
+                SaveButton.IsEnabled = false;
+            }
         }
         private void ClearBoxes()
         {
@@ -121,7 +123,6 @@ namespace PizzaNinja
             {
                 DragMove();
             }
-
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)

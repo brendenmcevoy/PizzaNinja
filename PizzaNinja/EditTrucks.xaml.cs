@@ -25,75 +25,78 @@ namespace PizzaNinja
     {
         private IConnectionFactory conn;
         private UnitOfWork uow;
-        private ObservableCollection<Truck> trucks;
-        private bool edit;
         public EditTrucks()
         {
             conn = new DatabaseConnectionFactory();
             uow = new UnitOfWork(conn);
             InitializeComponent();
-            trucks = new ObservableCollection<Truck>();
-            TruckList.ItemsSource = trucks;
-            edit = false;
+            NameBox.Focus();
+            SaveButton.IsEnabled = false;
         }
         private async void TruckList_Initialized(object sender, EventArgs e)
         {
             foreach (Truck t in new ObservableCollection<Truck>(await Task.Run(() => uow.Trucks.GetAllAsync().Result)))
             {
-                trucks.Add(t);
+                TruckList.Items.Add(t);
             }
         }
         private async void RefreshList()
         {
-            trucks.Clear();
+            TruckList.Items.Clear();
 
             foreach (Truck t in new ObservableCollection<Truck>(await Task.Run(() => uow.Trucks.GetAllAsync().Result)))
             {
-                trucks.Add(t);
+                TruckList.Items.Add(t);
             }
         }
-        private void Edit_Click(object sender, RoutedEventArgs e)
+        private async void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            Truck truck = new Truck();
+            truck.Name = NameBox.Text;
+            await Task.Run(() => uow.Trucks.AddAsync(truck));
+            RefreshList();
+            NameBox.Text = string.Empty;
+            NameBox.Focus();
+        }
+        private void EditButton_Click(object sender, RoutedEventArgs e)
         {
             NameBox.Text = string.Empty;
-            var truck = TruckList.SelectedItem as Truck;    
+            Truck truck = TruckList.SelectedItem as Truck;
 
-            if(truck != null)
+            if (truck != null)
             {
                 NameBox.Text = truck.Name;
-                edit = true;
             }
+
+            SaveButton.IsEnabled = true;
         }
 
-        private void AddButton_Click(object sender, RoutedEventArgs e)
+        private async void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            if(edit == true)
+            Truck truck = TruckList.SelectedItem as Truck;
+
+            if (truck != null)
             {
-                Truck truck = TruckList.SelectedItem as Truck;
-                if(truck != null)
-                {
-                    truck.Name = NameBox.Text;
-                    uow.Trucks.UpdateAsync(truck);
-                    RefreshList();
-                    edit = false;
-                }
-            }
-            else
-            {
-                Truck truck = new Truck();
                 truck.Name = NameBox.Text;
-                uow.Trucks.AddAsync(truck);
+
+                await Task.Run(() => uow.Trucks.UpdateAsync(truck));
+                NameBox.Text = string.Empty;
+                NameBox.Focus();
                 RefreshList();
+                SaveButton.IsEnabled = false;
             }
-            
         }
 
         private async void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
             Truck truck = TruckList.SelectedItem as Truck;
+
             if (truck != null)
             {
                 var output = await Task.Run(() => uow.Trucks.DeleteAsync(truck.TruckId));
-                RefreshList();
+                RefreshList(); 
+                NameBox.Text = string.Empty;
+                NameBox.Focus();
             }
             
         }

@@ -36,8 +36,10 @@
             <RowDefinition Height="50"/>
             <RowDefinition Height="50"/>
             <RowDefinition Height="50"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
             <Button x:Name="CloseButton"
                 Grid.Column="6"
@@ -62,43 +64,53 @@
                 Background="Transparent"
                 BorderBrush="Transparent"
                 Click="MinimizeButton_Click"/>
-        
-        <ListView x:Name="JobList"
-                  Grid.Column="3"
-                  Grid.Row="1"
-                  Grid.ColumnSpan="3"
-                  Grid.RowSpan="7"
-                  Margin="40,0,0,0"
-                  FontFamily="/Fonts/CarterOne.ttf #Carter One"
-                  BorderBrush="#040303"
-                  Foreground="#040303"
-                  Background="#8F8F8F"
-                  Initialized="JobList_Initialized">
-                <ListView.Resources>
-                    <Style TargetType="GridViewColumnHeader">
-                        <Setter Property="Background" Value="#8f8f8f"/>
+
+            <DataGrid x:Name="JobList"
+                      Grid.Column="3"
+                      Grid.ColumnSpan="3"
+                      Grid.Row="1"
+                      Grid.RowSpan="9"
+                      Margin="20,0,0,0"
+                      FontFamily="/Fonts/CarterOne.ttf #Carter One"
+                      BorderBrush="#040303"
+                      Foreground="#040303"
+                      Background="#8F8F8F"
+                      BorderThickness="2"
+                      Initialized="JobList_Initialized"
+                      CanUserResizeColumns="False"
+                      CanUserResizeRows="False"
+                      SelectionMode="Single">
+                <DataGrid.Resources>
+                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                        <Setter Property="BorderThickness" Value="0,0,1,2"/>
                         <Setter Property="BorderBrush" Value="#040303"/>
+                        <Setter Property="HorizontalContentAlignment" 
+                                Value="Center"/>
                     </Style>
-                </ListView.Resources>
-                <ListView.View>
-                    <GridView ColumnHeaderToolTip="Job Information">
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=JobId}"
-                                    Header="JobId"
-                                    Width="45"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}"
-                                    Header="Name"
-                                    Width="80"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Description}"
-                                    Header="Description"
-                                    Width="195"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=TruckId}"
-                                    Header="TruckId"
-                                    Width="64"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-        
-        <Label Content="Edit Jobs"
+                </DataGrid.Resources>
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Width="40">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button x:Name="EditButton" 
+                                        Click="EditButton_Click"
+                                        Background="Transparent">Edit</Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Id" Width="50" Binding="{Binding JobId}"/>
+                    <DataGridTextColumn Header="Name" Width="80" Binding="{Binding Name}"/>
+                    <DataGridTextColumn Header="Description" Width="170" Binding="{Binding Description}"/>
+                    <DataGridTextColumn Header="TruckId" Width="*" Binding="{Binding TruckId}"/>
+                </DataGrid.Columns>
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Setter Property="Background" Value="#DEE2E6"/>
+                    </Style>
+                </DataGrid.RowStyle>
+            </DataGrid>
+
+            <Label Content="Edit Jobs"
                Grid.Column="1"
                Grid.ColumnSpan="2"
                Grid.Row="1"
@@ -108,56 +120,18 @@
                FontSize="28"
                FontFamily="/Fonts/CarterOne.ttf #Carter One"
                Margin="50,0,0,0"/>
-            
-            <Button x:Name="Edit"
-                    Grid.Column="2"
-                    Grid.Row="2"
-                    Content="Edit Selected"
-                    FontFamily="/Fonts/CarterOne.ttf #Carter One"
-                    FontSize="14"
-                    VerticalContentAlignment="Center"
-                    VerticalAlignment="Top"
-                    HorizontalAlignment="Center"
-                    Margin="0,0,55,0"
-                    Click="Edit_Click">
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="Background" Value="#F7F7FF"/>
-                        <Setter Property="Foreground" Value="#000000"/>
-                        <Setter Property="FontFamily" Value="/Fonts/CarterOne.ttf #Carter One"/>
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" 
-                                            Value="#333138"/>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border Width="100" Height="25"
-                                CornerRadius="4"
-                                Background="{TemplateBinding Background}">
-                            <ContentPresenter VerticalAlignment="Center"
-                                              HorizontalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
 
             <Label Content="JobId:"
                FontSize="18"
                FontFamily="/Fonts/CarterOne.ttf #Carter One"
                Grid.Column="1"
                Grid.Row="2"
-               Grid.RowSpan="2"
                VerticalAlignment="Center"
                HorizontalContentAlignment="Right"/>
         
         <TextBox x:Name="JobIdBox"
                  Grid.Column="2"
                  Grid.Row="2"
-                 Grid.RowSpan="2"
                  FontFamily="/Fonts/CarterOne.ttf #Carter One"
                  Height="30"
                  Width="200"
@@ -168,14 +142,12 @@
                FontFamily="/Fonts/CarterOne.ttf #Carter One"
                Grid.Column="1"
                Grid.Row="3"
-               Grid.RowSpan="2"
                VerticalAlignment="Center"
                HorizontalContentAlignment="Right"/>
         
         <TextBox x:Name="NameBox"
                  Grid.Column="2"
                  Grid.Row="3"
-                 Grid.RowSpan="2"
                  FontFamily="/Fonts/CarterOne.ttf #Carter One"
                  Height="30"
                  Width="200"
@@ -185,7 +157,7 @@
                FontSize="16"
                FontFamily="/Fonts/CarterOne.ttf #Carter One"
                Grid.Column="1"
-               Grid.Row="5"
+               Grid.Row="4"
                HorizontalContentAlignment="Right"/>
         
         <TextBox x:Name="DescriptionBox"
@@ -193,37 +165,34 @@
                  Grid.Row="4"
                  Grid.RowSpan="3"
                  TextWrapping="Wrap"
-                 Margin="0,18,0,0"
+                 Margin="0,0,0,0"
                  FontFamily="/Fonts/CarterOne.ttf #Carter One"
                  Height="100"
                  Width="200"
-                 HorizontalAlignment="Left"/>
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"/>
         
         <Label Content="TruckId:"
                FontSize="18"
                FontFamily="/Fonts/CarterOne.ttf #Carter One"
                Grid.Column="1"
-               Grid.Row="7"
+               Grid.Row="6"
                VerticalAlignment="Top"
                HorizontalContentAlignment="Right"/>
         
         <TextBox x:Name="TruckIdBox"
                  Grid.Column="2"
-                 Grid.Row="7"
+                 Grid.Row="6"
                  FontFamily="/Fonts/CarterOne.ttf #Carter One"
                  Height="30"
                  Width="200"
-                 VerticalAlignment="Top"
                  HorizontalAlignment="Left"/>
         
         <Button x:Name="AddButton"
                 Content="Save Job"
                 FontSize="14"
-                Grid.Column="1"
-                Grid.ColumnSpan="2"
+                Grid.Column="2"
                 Grid.Row="7"
-                Margin="0,0,110,0"
-                VerticalAlignment="Bottom"
                 Click="AddButton_Click">
             <Button.Style>
                 <Style TargetType="Button">
@@ -240,7 +209,7 @@
             </Button.Style>
             <Button.Template>
                 <ControlTemplate TargetType="Button">
-                    <Border Width="105" Height="50"
+                    <Border Width="120" Height="30"
                                 CornerRadius="9"
                                 Background="{TemplateBinding Background}">
                         <ContentPresenter VerticalAlignment="Center"
@@ -254,10 +223,7 @@
                 Content="Remove Job"
                 FontSize="14"
                 Grid.Column="2"
-                Grid.Row="7"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Bottom"
-                Margin="0,0,10,0"
+                Grid.Row="8"
                 Click="RemoveButton_Click">
                 <Button.Style>
                     <Style TargetType="Button">
@@ -274,7 +240,42 @@
                 </Button.Style>
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
-                        <Border Width="120" Height="50"
+                        <Border Width="120" Height="30"
+                                CornerRadius="9"
+                                Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center"
+                                              HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            
+            <Button x:Name="SaveButton"
+                Content="Save Changes"
+                FontSize="14"
+                Grid.Column="2"
+                Grid.Row="9"
+                Click="SaveButton_Click">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#F7F7FF"/>
+                        <Setter Property="Foreground" Value="#000000"/>
+                        <Setter Property="FontFamily" Value="/Fonts/CarterOne.ttf #Carter One"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" 
+                                            Value="#333138"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Background"
+                                        Value="#343A40"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Width="120" Height="30"
                                 CornerRadius="9"
                                 Background="{TemplateBinding Background}">
                             <ContentPresenter VerticalAlignment="Center"
