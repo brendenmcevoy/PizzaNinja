@@ -4,6 +4,8 @@ using PN.Logic;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.Design;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -52,16 +54,51 @@ namespace PizzaNinja
         }
         private async void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            Employee employee = new Employee();
-            employee.Name = NameBox.Text;
-            employee.Username = NameBox.Text;
-            employee.Password = PasswordBox.Text;
-            employee.IsAdmin = bool.Parse(AdminBox.Text);
+            if(NameBox.Text == string.Empty)
+            {
+                Message mes = new Message("Invalid input.", "Must enter a name.");
+                mes.Show();
+                ClearBoxes();
+            }else if(UsernameBox.Text == string.Empty)
+            {
+                Message mes = new Message("Invalid input.", "Must enter a Username.");
+                mes.Show();
+                ClearBoxes();
+            }
+            else if (PasswordBox.Text == string.Empty)
+            {
+                Message mes = new Message("Invalid input.", "Must enter a password.");
+                mes.Show();
+                ClearBoxes();
+            }
+            else {
+                try
+                {
+                    Employee employee = new Employee();
+                    employee.Name = NameBox.Text;
+                    employee.Username = NameBox.Text;
+                    employee.Password = PasswordBox.Text;
+                    employee.IsAdmin = bool.Parse(AdminBox.Text);
 
-            var output = await Task.Run(() => uow.Employees.AddAsync(employee));
-            ClearBoxes();
-            NameBox.Focus();
-            RefreshList();
+                    var output = await Task.Run(() => uow.Employees.AddAsync(employee));
+                    ClearBoxes();
+                    NameBox.Focus();
+                    RefreshList();
+                }
+                //catch (Exception)
+                //{
+                //    Message mes = new Message("Invalid input.");
+                //    mes.Show();
+                //}
+                catch (FormatException)
+                {
+                    Message mes = new Message("Invalid input.", "Must enter either 'True' or 'False' in Admin box.");
+                    mes.Show();
+                    ClearBoxes();
+                }
+            }
+            
+
         }
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {

@@ -27,7 +27,7 @@ namespace PN.DB.Repository
                 return result;
             }
         }
-        public async Task<int> DeleteByIdAsync(int id,int truckId)
+        public async Task<int> DeleteByIdAsync(int id, int truckId)
         {
             using (var connection = _connectionFactory.GetConnection)
             {
@@ -41,13 +41,12 @@ namespace PN.DB.Repository
         {
             using (var connection = _connectionFactory.GetConnection)
             {
-                var sql = "DELETE FROM Jobs WHERE JobId = @JobId";
+                var sql = "DELETE FROM Jobs WHERE Id = @Id";
                 connection.Open();
-                var result = await Task.Run(() => connection.ExecuteAsync(sql, new { JobId = id}));
+                var result = await Task.Run(() => connection.ExecuteAsync(sql, new { Id = id}));
                 return result;
             }
         }
-
         public async Task<List<Job>> GetAllAsync()
         {
             using (var connection = _connectionFactory.GetConnection)

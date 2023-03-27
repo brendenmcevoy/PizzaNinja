@@ -270,7 +270,7 @@
                       BorderBrush="#040303"
                       CanUserResizeColumns="False"
                       CanUserResizeRows="False"
-                      Visibility="Visible"
+                      Visibility="Hidden"
                       SelectionMode="Single">
                 <DataGrid.Resources>
                     <Style TargetType="{x:Type DataGridColumnHeader}">

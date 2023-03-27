@@ -25,6 +25,7 @@ namespace PizzaNinja
     {
         private IConnectionFactory conn;
         private UnitOfWork uow;
+        private ObservableCollection<Truck> trucks;
         public EditJobs()
         {
             conn = new DatabaseConnectionFactory();
@@ -70,7 +71,7 @@ namespace PizzaNinja
             var job = JobList.SelectedItem as Job;
             if(job != null)
             {
-                await Task.Run(() => uow.Jobs.DeleteAsync(job.JobId));
+                await Task.Run(() => uow.Jobs.DeleteAsync(job.Id));
                 RefreshList();
                 ClearBoxes();
                 JobIdBox.Focus();

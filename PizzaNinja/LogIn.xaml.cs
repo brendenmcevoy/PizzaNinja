@@ -56,7 +56,10 @@ namespace PizzaNinja
             }
             else
             {
-                MessageBox.Show("Username and Password did not match");
+                string mes = "Username and Password did not match.";
+                Message message = new Message(mes);
+                message.Show();
+                //MessageBox.Show("Username and Password did not match");
             }
         }
         private void PasswordBox_GotFocus(object sender, RoutedEventArgs e)
