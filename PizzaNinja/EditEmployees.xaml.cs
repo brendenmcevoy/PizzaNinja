@@ -85,11 +85,6 @@ namespace PizzaNinja
                     NameBox.Focus();
                     RefreshList();
                 }
-                //catch (Exception)
-                //{
-                //    Message mes = new Message("Invalid input.");
-                //    mes.Show();
-                //}
                 catch (FormatException)
                 {
                     Message mes = new Message("Invalid input.", "Must enter either 'True' or 'False' in Admin box.");
@@ -131,21 +126,50 @@ namespace PizzaNinja
         }
         private async void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            Employee employee = EmployeeList.SelectedItem as Employee;
-
-            if (employee != null)
+            if (NameBox.Text == string.Empty)
             {
-                employee.Name = NameBox.Text;
-                employee.Password = PasswordBox.Text;
-                employee.IsAdmin = bool.Parse(AdminBox.Text);
-                employee.Username = UsernameBox.Text;
-
-                var output = await Task.Run(() => uow.Employees.UpdateAsync(employee));
+                Message mes = new Message("Invalid input.", "Must enter a name.");
+                mes.Show();
                 ClearBoxes();
-                NameBox.Focus();
-                RefreshList();
-                SaveButton.IsEnabled = false;
             }
+            else if (UsernameBox.Text == string.Empty)
+            {
+                Message mes = new Message("Invalid input.", "Must enter a Username.");
+                mes.Show();
+                ClearBoxes();
+            }
+            else if (PasswordBox.Text == string.Empty)
+            {
+                Message mes = new Message("Invalid input.", "Must enter a password.");
+                mes.Show();
+                ClearBoxes();
+            }else
+            {
+                try
+                {
+                    Employee employee = EmployeeList.SelectedItem as Employee;
+
+                    if (employee != null)
+                    {
+                        employee.Name = NameBox.Text;
+                        employee.Password = PasswordBox.Text;
+                        employee.IsAdmin = bool.Parse(AdminBox.Text);
+                        employee.Username = UsernameBox.Text;
+
+                        var output = await Task.Run(() => uow.Employees.UpdateAsync(employee));
+                        ClearBoxes();
+                        NameBox.Focus();
+                        RefreshList();
+                        SaveButton.IsEnabled = false;
+                    }
+                }
+                catch (FormatException)
+                {
+                    Message mes = new Message("Invalid input.", "Must enter either 'True' or 'False' in Admin box.");
+                    mes.Show();
+                    ClearBoxes();
+                }
+            }      
         }
         private void ClearBoxes()
         {

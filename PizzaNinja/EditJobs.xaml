@@ -47,6 +47,7 @@
             <RowDefinition Height="35"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+            
             <Button x:Name="CloseButton"
                 Grid.Column="6"
                 Grid.Row="0"
@@ -85,7 +86,8 @@
                       Initialized="JobList_Initialized"
                       CanUserResizeColumns="False"
                       CanUserResizeRows="False"
-                      SelectionMode="Single">
+                      SelectionMode="Single"
+                      IsReadOnly="True">
                 <DataGrid.Resources>
                     <Style TargetType="{x:Type DataGridColumnHeader}">
                         <Setter Property="BorderThickness" Value="0,0,1,2"/>

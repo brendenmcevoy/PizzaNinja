@@ -25,7 +25,6 @@ namespace PizzaNinja
     {
         private IConnectionFactory conn;
         private UnitOfWork uow;
-        private ObservableCollection<Truck> trucks;
         public EditJobs()
         {
             conn = new DatabaseConnectionFactory();
@@ -54,21 +53,61 @@ namespace PizzaNinja
         }
         private async void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            Job job = new Job();
-            job.JobId = int.Parse(JobIdBox.Text);
-            job.Name = NameBox.Text;
-            job.Description = DescriptionBox.Text;
-            job.TruckId = int.Parse(TruckIdBox.Text);
+            if (NameBox.Text == string.Empty)
+            {
+                Message mes = new Message("Invalid input.", "Must enter a name.");
+                mes.Show();
+                ClearBoxes();
+            }
+            else if (JobIdBox.Text == string.Empty)
+            {
+                Message mes = new Message("Invalid input.", "Must enter a Job Id.");
+                mes.Show();
+                ClearBoxes();
+            }
+            else if (DescriptionBox.Text == string.Empty)
+            {
+                Message mes = new Message("Invalid input.", "Must enter a description.");
+                mes.Show();
+                ClearBoxes();
+            }
+            else if (TruckIdBox.Text == string.Empty)
+            {
+                Message mes = new Message("Invalid input.", "Must enter a Truck Id.");
+                mes.Show();
+                ClearBoxes();
+            }
+            else
+            {
+                try
+                {
+                    Job job = new Job();
+                    if (job != null)
+                    {
+                        job.JobId = int.Parse(JobIdBox.Text);
+                        job.Name = NameBox.Text;
+                        job.Description = DescriptionBox.Text;
+                        job.TruckId = int.Parse(TruckIdBox.Text);
 
-            await Task.Run(() => uow.Jobs.AddAsync(job));
-            RefreshList();
-            ClearBoxes();
-            JobIdBox.Focus();
+                        await Task.Run(() => uow.Jobs.AddAsync(job));
+                        RefreshList();
+                        ClearBoxes();
+                        JobIdBox.Focus();
+                    }
+                }
+                catch (FormatException)
+                {
+                    Message mes = new Message("Invalid input.", "Job Id and Truck Id must be a positive number. (ex.1002)");
+                    mes.Show();
+                    ClearBoxes();
+                }
+            }    
         }
 
         private async void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
             var job = JobList.SelectedItem as Job;
+
             if(job != null)
             {
                 await Task.Run(() => uow.Jobs.DeleteAsync(job.Id));
@@ -80,6 +119,7 @@ namespace PizzaNinja
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
             ClearBoxes();
+
             Job job = JobList.SelectedItem as Job;
 
             if (job != null)
@@ -94,21 +134,57 @@ namespace PizzaNinja
         }
         private async void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            Job job = JobList.SelectedItem as Job;
-
-            if (job != null)
+            if (NameBox.Text == string.Empty)
             {
-                job.JobId = int.Parse(JobIdBox.Text);
-                job.Name = NameBox.Text;
-                job.Description = DescriptionBox.Text;
-                job.TruckId = int.Parse(TruckIdBox.Text);
-
-                await Task.Run(() => uow.Jobs.UpdateAsync(job));
+                Message mes = new Message("Invalid input.", "Must enter a name.");
+                mes.Show();
                 ClearBoxes();
-                JobIdBox.Focus();
-                RefreshList();
-                SaveButton.IsEnabled = false;
             }
+            else if (JobIdBox.Text == string.Empty)
+            {
+                Message mes = new Message("Invalid input.", "Must enter a Job Id.");
+                mes.Show();
+                ClearBoxes();
+            }
+            else if (DescriptionBox.Text == string.Empty)
+            {
+                Message mes = new Message("Invalid input.", "Must enter a description.");
+                mes.Show();
+                ClearBoxes();
+            }
+            else if (TruckIdBox.Text == string.Empty)
+            {
+                Message mes = new Message("Invalid input.", "Must enter a Truck Id.");
+                mes.Show();
+                ClearBoxes();
+            }
+            else
+            {
+                try
+                {
+                    Job job = JobList.SelectedItem as Job;
+
+                    if (job != null)
+                    {
+                        job.JobId = int.Parse(JobIdBox.Text);
+                        job.Name = NameBox.Text;
+                        job.Description = DescriptionBox.Text;
+                        job.TruckId = int.Parse(TruckIdBox.Text);
+
+                        await Task.Run(() => uow.Jobs.UpdateAsync(job));
+                        ClearBoxes();
+                        JobIdBox.Focus();
+                        RefreshList();
+                        SaveButton.IsEnabled = false;
+                    }
+                }catch (FormatException)
+                {
+                    Message mes = new Message("Invalid input.", "Job Id and Truck Id must be a positive number. (ex.1002)");
+                    mes.Show();
+                    ClearBoxes();
+                }
+            }
+            
         }
         private void ClearBoxes()
         {

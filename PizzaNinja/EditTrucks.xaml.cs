@@ -51,12 +51,21 @@ namespace PizzaNinja
         }
         private async void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            Truck truck = new Truck();
-            truck.Name = NameBox.Text;
-            await Task.Run(() => uow.Trucks.AddAsync(truck));
-            RefreshList();
-            NameBox.Text = string.Empty;
-            NameBox.Focus();
+            if (NameBox.Text == string.Empty)
+            {
+                Message mes = new Message("Invalid input.", "Must enter a name.");
+                mes.Show();
+                NameBox.Text = string.Empty;
+            }
+            else
+            {
+                Truck truck = new Truck();
+                truck.Name = NameBox.Text;
+                await Task.Run(() => uow.Trucks.AddAsync(truck));
+                RefreshList();
+                NameBox.Text = string.Empty;
+                NameBox.Focus();
+            }      
         }
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
@@ -73,18 +82,28 @@ namespace PizzaNinja
 
         private async void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            Truck truck = TruckList.SelectedItem as Truck;
-
-            if (truck != null)
+            if (NameBox.Text == string.Empty)
             {
-                truck.Name = NameBox.Text;
-
-                await Task.Run(() => uow.Trucks.UpdateAsync(truck));
+                Message mes = new Message("Invalid input.", "Must enter a name.");
+                mes.Show();
                 NameBox.Text = string.Empty;
-                NameBox.Focus();
-                RefreshList();
-                SaveButton.IsEnabled = false;
             }
+            else
+            {
+                Truck truck = TruckList.SelectedItem as Truck;
+
+                if (truck != null)
+                {
+                    truck.Name = NameBox.Text;
+
+                    await Task.Run(() => uow.Trucks.UpdateAsync(truck));
+                    NameBox.Text = string.Empty;
+                    NameBox.Focus();
+                    RefreshList();
+                    SaveButton.IsEnabled = false;
+                }
+            }
+                
         }
 
         private async void RemoveButton_Click(object sender, RoutedEventArgs e)

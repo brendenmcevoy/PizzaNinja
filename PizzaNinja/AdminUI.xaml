@@ -174,7 +174,9 @@
                       VerticalAlignment="Center"
                       BorderThickness="1"
                       Initialized="TruckBox_Initialized" 
-                      SelectionChanged="TruckBox_SelectionChanged"/>
+                      SelectionChanged="TruckBox_SelectionChanged"
+                      IsEditable="False"
+                      IsReadOnly="True"/>
 
             <Button x:Name="CompletedJobsButton"
                     Content="Completed Jobs"
@@ -226,7 +228,8 @@
                       BorderBrush="#040303"
                       CanUserResizeColumns="False"
                       CanUserResizeRows="False"
-                      SelectionMode="Single">
+                      SelectionMode="Single"
+                      IsReadOnly="True">
 
                 <DataGrid.Resources>
                     <Style TargetType="{x:Type DataGridColumnHeader}">
@@ -270,6 +273,7 @@
                       BorderBrush="#040303"
                       CanUserResizeColumns="False"
                       CanUserResizeRows="False"
+                      IsReadOnly="True"
                       Visibility="Hidden"
                       SelectionMode="Single">
                 <DataGrid.Resources>

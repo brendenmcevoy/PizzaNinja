@@ -108,7 +108,8 @@
                       BorderBrush="#040303"
                       CanUserResizeColumns="False"
                       CanUserResizeRows="False"
-                      SelectionMode="Single">
+                      SelectionMode="Single"
+                      IsReadOnly="True">
                 <DataGrid.Resources>
                     <Style TargetType="{x:Type DataGridColumnHeader}">
                         <Setter Property="BorderThickness" Value="0,0,1,2"/>
