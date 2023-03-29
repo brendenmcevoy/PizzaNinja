@@ -26,24 +26,24 @@ namespace PizzaNinja
     /// </summary>
     public partial class EditEmployees : Window
     {
-        private IConnectionFactory conn;
-        private UnitOfWork uow;
+        private IConnectionFactory conn; //Connects to DB
+        private UnitOfWork uow; // Contains Repos that retrevie and manipulate data in the DB
         public EditEmployees(Employee adminEmployee)
         {
             conn = new DatabaseConnectionFactory();
             uow = new UnitOfWork(conn);
             InitializeComponent();
-            SaveButton.IsEnabled = false;
-            NameBox.Focus();
+            SaveButton.IsEnabled = false; // Loads w/ save button disabled, helps prevent a misclick
+            NameBox.Focus(); // Loads with the first text box active, for quicker entry
         } 
-        private async void EmployeeList_Initialized(object sender, EventArgs e)
+        private async void EmployeeList_Initialized(object sender, EventArgs e) // populate DataGrid with every employee in the DB
         {
             foreach (Employee em in new ObservableCollection<Employee>(await Task.Run(() => uow.Employees.GetAllAsync().Result)))
             {
                 EmployeeList.Items.Add(em);
             }
         }
-        private async void RefreshList()
+        private async void RefreshList() // refreshes the employees in the DataGrid
         {
             EmployeeList.Items.Clear();
 
@@ -52,11 +52,11 @@ namespace PizzaNinja
                 EmployeeList.Items.Add(em);
             }
         }
-        private async void AddButton_Click(object sender, RoutedEventArgs e)
+        private async void AddButton_Click(object sender, RoutedEventArgs e) // Adds an employee to the DB using data from the text boxes
         {
             if(NameBox.Text == string.Empty)
             {
-                Message mes = new Message("Invalid input.", "Must enter a name.");
+                Message mes = new Message("Invalid input.", "Must enter a name."); // Check to see if textbox isn't empty, load an error message if its empty
                 mes.Show();
                 ClearBoxes();
             }else if(UsernameBox.Text == string.Empty)
@@ -80,12 +80,12 @@ namespace PizzaNinja
                     employee.Password = PasswordBox.Text;
                     employee.IsAdmin = bool.Parse(AdminBox.Text);
 
-                    var output = await Task.Run(() => uow.Employees.AddAsync(employee));
+                    var output = await Task.Run(() => uow.Employees.AddAsync(employee)); // Try to add the employee
                     ClearBoxes();
                     NameBox.Focus();
-                    RefreshList();
+                    RefreshList(); //Update the DataGrid
                 }
-                catch (FormatException)
+                catch (FormatException) // Load an error message if Admin input was incorrect
                 {
                     Message mes = new Message("Invalid input.", "Must enter either 'True' or 'False' in Admin box.");
                     mes.Show();
@@ -95,12 +95,12 @@ namespace PizzaNinja
             
 
         }
-        private void EditButton_Click(object sender, RoutedEventArgs e)
+        private void EditButton_Click(object sender, RoutedEventArgs e) // Fills each textbox w/ specific data based on the selected employee (selected from DataGrid)
         {
             ClearBoxes();
             Employee employee = EmployeeList.SelectedItem as Employee;
 
-            if(employee != null)
+            if(employee != null) // Makes sure that there is actually a selected employee
             {
                 NameBox.Text = employee.Name;
                 UsernameBox.Text = employee.Username;
@@ -108,10 +108,10 @@ namespace PizzaNinja
                 AdminBox.Text = employee.IsAdmin.ToString();
             }
 
-            SaveButton.IsEnabled = true;
+            SaveButton.IsEnabled = true; // Enable Save Changes button
             
         }
-        private async void RemoveButton_Click(object sender, RoutedEventArgs e)
+        private async void RemoveButton_Click(object sender, RoutedEventArgs e) // Removes the selected employee 
         {
             Employee employee = EmployeeList.SelectedItem as Employee;
 
@@ -124,11 +124,11 @@ namespace PizzaNinja
             }
             
         }
-        private async void SaveButton_Click(object sender, RoutedEventArgs e)
+        private async void SaveButton_Click(object sender, RoutedEventArgs e) // Saves the changes made to selected employee (Selected w/ Edit Button click)
         {
             if (NameBox.Text == string.Empty)
             {
-                Message mes = new Message("Invalid input.", "Must enter a name.");
+                Message mes = new Message("Invalid input.", "Must enter a name.");  // Check to see if textbox isn't empty, load an error message if its empty
                 mes.Show();
                 ClearBoxes();
             }
@@ -160,10 +160,10 @@ namespace PizzaNinja
                         ClearBoxes();
                         NameBox.Focus();
                         RefreshList();
-                        SaveButton.IsEnabled = false;
+                        SaveButton.IsEnabled = false;  // Disable Save Changes button
                     }
                 }
-                catch (FormatException)
+                catch (FormatException)  // Load an error message if Admin input was incorrect
                 {
                     Message mes = new Message("Invalid input.", "Must enter either 'True' or 'False' in Admin box.");
                     mes.Show();
@@ -171,7 +171,7 @@ namespace PizzaNinja
                 }
             }      
         }
-        private void ClearBoxes()
+        private void ClearBoxes() //Clears all Text Boxes
         {
             NameBox.Text = string.Empty;
             AdminBox.Text = string.Empty;
