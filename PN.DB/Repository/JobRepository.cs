@@ -17,7 +17,7 @@ namespace PN.DB.Repository
             _connectionFactory = Conn;
         }
 
-        public async Task<int> AddAsync(Job entity)
+        public async Task<int> AddAsync(Job entity) // Adds a job to the DB
         {
             using (var connection = _connectionFactory.GetConnection)
             {
@@ -27,7 +27,7 @@ namespace PN.DB.Repository
                 return result;
             }
         }
-        public async Task<int> DeleteByIdAsync(int id, int truckId)
+        public async Task<int> DeleteByIdAsync(int id, int truckId) // Deletes a job with matching jobid and truck id from the DB
         {
             using (var connection = _connectionFactory.GetConnection)
             {
@@ -37,7 +37,7 @@ namespace PN.DB.Repository
                 return result;
             }
         }
-        public async Task<int> DeleteAsync(int id)
+        public async Task<int> DeleteAsync(int id) // Deletes a job from the DB
         {
             using (var connection = _connectionFactory.GetConnection)
             {
@@ -47,7 +47,7 @@ namespace PN.DB.Repository
                 return result;
             }
         }
-        public async Task<List<Job>> GetAllAsync()
+        public async Task<List<Job>> GetAllAsync() // Gets all jobs from the DB
         {
             using (var connection = _connectionFactory.GetConnection)
             {
@@ -57,7 +57,7 @@ namespace PN.DB.Repository
                 return result;
             }
         }
-        public async Task<List<Job>> GetAllByIdAsync(int id)
+        public async Task<List<Job>> GetAllByIdAsync(int id) // Gets all the jobs with a matching TruckId from the DB
         {
             using (var connection = _connectionFactory.GetConnection)
             {
@@ -68,7 +68,7 @@ namespace PN.DB.Repository
             }
         }
 
-        public async Task<Job> GetByIdAsync(int id)
+        public async Task<Job> GetByIdAsync(int id) // Gets a job with matching id from a DB
         {
             using (var connection = _connectionFactory.GetConnection)
             {
@@ -79,7 +79,7 @@ namespace PN.DB.Repository
             }
         }
 
-        public async Task<int> UpdateAsync(Job entity)
+        public async Task<int> UpdateAsync(Job entity) // Updates a job in the DB
         {
             using (var connection = _connectionFactory.GetConnection)
             {

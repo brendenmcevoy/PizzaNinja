@@ -27,30 +27,27 @@ namespace PizzaNinja
         private IConnectionFactory conn; //Connects to DB
         private UnitOfWork uow; // Contains Repos that retrevie and manipulate data in the DB
         private Employee _adminEmployee; // Contains all the info for the current user
-        private ObservableCollection<Truck> trucks; //Collection used to populate ComboBox
         public AdminUI(Employee adminEmployee)
         {
             conn = new DatabaseConnectionFactory();
             uow = new UnitOfWork(conn);
             _adminEmployee = adminEmployee;
             InitializeComponent(); 
-            trucks = new ObservableCollection<Truck>();
-            TruckBox.ItemsSource = trucks;
         }
         private async void TruckBox_Initialized(object sender, EventArgs e) //Populates ComboBox with all trucks in the DB
         {
             foreach (Truck t in new ObservableCollection<Truck>(await Task.Run(() => uow.Trucks.GetAllAsync().Result)))
             {
-                trucks.Add(t);
+                TruckBox.Items.Add(t);
             }
         }
         private async void RefreshList() //Refresh list of trucks in the ComboBox
         {
-            trucks.Clear();
+            TruckBox.Items.Clear();
 
             foreach (Truck t in new ObservableCollection<Truck>(await Task.Run(() => uow.Trucks.GetAllAsync().Result)))
             {
-                trucks.Add(t);
+                TruckBox.Items.Add(t);
             }
         }
         private async void TruckBox_SelectionChanged(object sender, SelectionChangedEventArgs e) //Displays list of jobs in the DataGrid based on selected truck

@@ -17,7 +17,7 @@ namespace PN.DB.Repository
              _connectionFactory = Conn;
         }
 
-        public async Task<int> AddAsync(Employee entity)
+        public async Task<int> AddAsync(Employee entity) // Adds an Employee to the DB
         {
             using (var connection = _connectionFactory.GetConnection)
             {
@@ -28,7 +28,7 @@ namespace PN.DB.Repository
             }
         }
 
-        public async Task<int> DeleteAsync(int id)
+        public async Task<int> DeleteAsync(int id) // Removes an Employee from the DB
         {
             using (var connection = _connectionFactory.GetConnection)
             {
@@ -39,7 +39,7 @@ namespace PN.DB.Repository
             }
         }
 
-        public async Task<List<Employee>> GetAllAsync()
+        public async Task<List<Employee>> GetAllAsync() // Gets all Employees from the DB
         {
             using (var connection = _connectionFactory.GetConnection)
             {
@@ -50,7 +50,7 @@ namespace PN.DB.Repository
             }
         }
 
-        public async Task<Employee> GetByIdAsync(int id)
+        public async Task<Employee> GetByIdAsync(int id) // Gets an Employee with matching Id from the DB
         {
             using (var connection = _connectionFactory.GetConnection)
             {
@@ -61,18 +61,18 @@ namespace PN.DB.Repository
             }
         }
 
-        public async Task<string> GetPasswordAsync(string password)
+        public async Task<string> GetPasswordAsync(int id) // Gets a Employees password from DB
         {
             using (var connection = _connectionFactory.GetConnection)
             {
-                var sql = "SELECT Password FROM Employee WHERE (Password = @password)";
+                var sql = "SELECT Password FROM Employee WHERE (Id = @id)";
                 connection.Open();
-                var result = await Task.Run(() => connection.QueryFirstOrDefaultAsync<string>(sql, new { Password = password }).Result);
+                var result = await Task.Run(() => connection.QueryFirstOrDefaultAsync<string>(sql, new { Id = id }));
                 return result;
             }
         }
 
-        public async Task<string> GetUsernameAsync(string username)
+        public async Task<string> GetUsernameAsync(string username) // Gets an Employees username from the DB
         {
             using (var connection = _connectionFactory.GetConnection)
             {
@@ -83,7 +83,7 @@ namespace PN.DB.Repository
             }
         }
 
-        public async Task<int> UpdateAsync(Employee entity)
+        public async Task<int> UpdateAsync(Employee entity) // Updates a Emplyoee in the DB
         {
             using (var connection = _connectionFactory.GetConnection)
             {
@@ -94,7 +94,7 @@ namespace PN.DB.Repository
             }
         }
 
-        public async Task<Employee> GetEmployeeByUsernameAsync(string username)
+        public async Task<Employee> GetEmployeeByUsernameAsync(string username) // Gets an employee with a matching username from DB
         {
             using (var connection = _connectionFactory.GetConnection)
             {

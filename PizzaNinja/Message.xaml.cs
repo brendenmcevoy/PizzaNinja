@@ -17,21 +17,21 @@ namespace PizzaNinja
     /// <summary>
     /// Interaction logic for Message.xaml
     /// </summary>
-    public partial class Message : Window
+    public partial class Message : Window // Used to show stylized error messages to the user
     {       
-        public Message(string message)
+        public Message(string message) // Used for a short message
         {
             InitializeComponent();
             MessageLabel.Text = message;
         }
-        public Message(string message, string subMessage)
+        public Message(string message, string subMessage) // used for a longer message
         {
             InitializeComponent();
             MessageLabel.Text = message;
             SubMessageLabel.Text = subMessage;
         }
 
-        private void OkButton_Click(object sender, RoutedEventArgs e)
+        private void OkButton_Click(object sender, RoutedEventArgs e) // closes message box
         {
             this.Close();
         }

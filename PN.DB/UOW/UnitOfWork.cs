@@ -10,7 +10,7 @@ using PN.Logic;
 
 namespace PN.DB.UOW
 {
-    public class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork // Creates an instance of each Repo and connects them to DB
     {
         public UnitOfWork(IConnectionFactory Conn) 
         {

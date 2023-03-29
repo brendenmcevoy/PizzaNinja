@@ -9,8 +9,8 @@ namespace PN.DB.Interfaces
 {
     public interface IEmployeeRepository<Employee> : IGenericRepository<Employee>
     {
-        Task<string> GetUsernameAsync(string username);
-        Task<Employee> GetEmployeeByUsernameAsync(string username);
-        Task<string> GetPasswordAsync(string password);
+        Task<string> GetUsernameAsync(string username); // Get employee username from DB
+        Task<Employee> GetEmployeeByUsernameAsync(string username); // Get employee with matching username from DB
+        Task<string> GetPasswordAsync(int id); // Get employee password
     }
 }

@@ -33,14 +33,14 @@ namespace PizzaNinja
             NameBox.Focus();
             SaveButton.IsEnabled = false;
         }
-        private async void TruckList_Initialized(object sender, EventArgs e)
+        private async void TruckList_Initialized(object sender, EventArgs e) // populate DataGrid with all Trucks in the DB
         {
             foreach (Truck t in new ObservableCollection<Truck>(await Task.Run(() => uow.Trucks.GetAllAsync().Result)))
             {
                 TruckList.Items.Add(t);
             }
         }
-        private async void RefreshList()
+        private async void RefreshList() // updates trucks in the DataGrid
         {
             TruckList.Items.Clear();
 
@@ -49,9 +49,9 @@ namespace PizzaNinja
                 TruckList.Items.Add(t);
             }
         }
-        private async void AddButton_Click(object sender, RoutedEventArgs e)
+        private async void AddButton_Click(object sender, RoutedEventArgs e) //Adds a truck to the DB using text from the textbox
         {
-            if (NameBox.Text == string.Empty)
+            if (NameBox.Text == string.Empty) // Check to see if textbox isn't empty, load an error message if its empty
             {
                 Message mes = new Message("Invalid input.", "Must enter a name.");
                 mes.Show();
@@ -63,16 +63,16 @@ namespace PizzaNinja
                 truck.Name = NameBox.Text;
                 await Task.Run(() => uow.Trucks.AddAsync(truck));
                 RefreshList();
-                NameBox.Text = string.Empty;
+                NameBox.Text = string.Empty;  // clears the textbox
                 NameBox.Focus();
             }      
         }
-        private void EditButton_Click(object sender, RoutedEventArgs e)
+        private void EditButton_Click(object sender, RoutedEventArgs e)  // Fills each textbox w/ specific data based on the selected truck (selected from DataGrid)
         {
             NameBox.Text = string.Empty;
             Truck truck = TruckList.SelectedItem as Truck;
 
-            if (truck != null)
+            if (truck != null)  // Makes sure there is actually a selected truck
             {
                 NameBox.Text = truck.Name;
             }
@@ -80,11 +80,11 @@ namespace PizzaNinja
             SaveButton.IsEnabled = true;
         }
 
-        private async void SaveButton_Click(object sender, RoutedEventArgs e)
+        private async void SaveButton_Click(object sender, RoutedEventArgs e)  // Saves the changes made to selected truck (Selected w/ Edit Button click)
         {
             if (NameBox.Text == string.Empty)
             {
-                Message mes = new Message("Invalid input.", "Must enter a name.");
+                Message mes = new Message("Invalid input.", "Must enter a name.");  
                 mes.Show();
                 NameBox.Text = string.Empty;
             }
@@ -106,7 +106,7 @@ namespace PizzaNinja
                 
         }
 
-        private async void RemoveButton_Click(object sender, RoutedEventArgs e)
+        private async void RemoveButton_Click(object sender, RoutedEventArgs e) // Removes selected truck from the DB
         {
             Truck truck = TruckList.SelectedItem as Truck;
 

@@ -17,9 +17,9 @@ namespace PN.DB.UOW
             return ConfigurationManager.ConnectionStrings[name].ConnectionString;
         }
 
-        private readonly string connectionString = "Data Source = (localdb)\\MSSQLLocalDB;database = PizzaNinja";
+        private readonly string connectionString = "Data Source = (localdb)\\MSSQLLocalDB;database = PizzaNinja"; // connection strings for localDB
 
-        public IDbConnection GetConnection
+        public IDbConnection GetConnection //Connect to DB
         {
             get
             {

@@ -34,7 +34,7 @@ namespace PizzaNinja
             SaveButton.IsEnabled = false;
         }
 
-        private async void JobList_Initialized(object sender, EventArgs e)
+        private async void JobList_Initialized(object sender, EventArgs e) // populate DataGrid with all jobs in DB
         {
             foreach (Job j in new ObservableCollection<Job>(await Task.Run(() => uow.Jobs.GetAllAsync().Result)))
             {
@@ -42,7 +42,7 @@ namespace PizzaNinja
             }
         }
 
-        private async void RefreshList()
+        private async void RefreshList() // refresh jobs in DataGrid
         {
             JobList.Items.Clear();
 
@@ -51,11 +51,11 @@ namespace PizzaNinja
                 JobList.Items.Add(j);
             }
         }
-        private async void AddButton_Click(object sender, RoutedEventArgs e)
+        private async void AddButton_Click(object sender, RoutedEventArgs e) // Adds a job to the DB using data from the text boxes
         {
             if (NameBox.Text == string.Empty)
             {
-                Message mes = new Message("Invalid input.", "Must enter a name.");
+                Message mes = new Message("Invalid input.", "Must enter a name."); // Check to see if textbox isn't empty, load an error message if its empty
                 mes.Show();
                 ClearBoxes();
             }
@@ -89,13 +89,13 @@ namespace PizzaNinja
                         job.Description = DescriptionBox.Text;
                         job.TruckId = int.Parse(TruckIdBox.Text);
 
-                        await Task.Run(() => uow.Jobs.AddAsync(job));
+                        await Task.Run(() => uow.Jobs.AddAsync(job));  // Try to add the job
                         RefreshList();
-                        ClearBoxes();
-                        JobIdBox.Focus();
+                        ClearBoxes(); //Update the DataGrid
+                        JobIdBox.Focus(); 
                     }
                 }
-                catch (FormatException)
+                catch (FormatException) // Load an error message if TruckId or JobId input was incorrect
                 {
                     Message mes = new Message("Invalid input.", "Job Id and Truck Id must be a positive number. (ex.1002)");
                     mes.Show();
@@ -104,11 +104,11 @@ namespace PizzaNinja
             }    
         }
 
-        private async void RemoveButton_Click(object sender, RoutedEventArgs e)
+        private async void RemoveButton_Click(object sender, RoutedEventArgs e)  // Removes the selected job
         {
-            var job = JobList.SelectedItem as Job;
+            var job = JobList.SelectedItem as Job;  
 
-            if(job != null)
+            if (job != null)  // Makes sure that there is actually a selected job
             {
                 await Task.Run(() => uow.Jobs.DeleteAsync(job.Id));
                 RefreshList();
@@ -116,7 +116,7 @@ namespace PizzaNinja
                 JobIdBox.Focus();
             }          
         }
-        private void EditButton_Click(object sender, RoutedEventArgs e)
+        private void EditButton_Click(object sender, RoutedEventArgs e)  // Fills each textbox w/ specific data based on the selected job (selected from DataGrid)
         {
             ClearBoxes();
 
@@ -130,13 +130,13 @@ namespace PizzaNinja
                 TruckIdBox.Text = job.TruckId.ToString();         
             }
 
-            SaveButton.IsEnabled = true;
+            SaveButton.IsEnabled = true;  // Enable Save Changes button
         }
-        private async void SaveButton_Click(object sender, RoutedEventArgs e)
+        private async void SaveButton_Click(object sender, RoutedEventArgs e)  // Saves the changes made to selected job (Selected w/ Edit Button click)
         {
             if (NameBox.Text == string.Empty)
             {
-                Message mes = new Message("Invalid input.", "Must enter a name.");
+                Message mes = new Message("Invalid input.", "Must enter a name.");  // Check to see if textbox isn't empty, load an error message if its empty
                 mes.Show();
                 ClearBoxes();
             }
@@ -175,7 +175,7 @@ namespace PizzaNinja
                         ClearBoxes();
                         JobIdBox.Focus();
                         RefreshList();
-                        SaveButton.IsEnabled = false;
+                        SaveButton.IsEnabled = false;  // Disable Save Changes button
                     }
                 }catch (FormatException)
                 {

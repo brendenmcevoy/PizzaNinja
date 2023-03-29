@@ -8,9 +8,9 @@ namespace PN.Logic
 {
     public class Truck
     {
-        public int TruckId {  get;  set; }
-        public string Name { get;  set;}   
-        public override string ToString()
+        public int TruckId {  get;  set; } // ID created by the DB (Primary Key)
+        public string Name { get;  set;}   // Name of the Truck
+        public override string ToString() // Used to display trucks in Combo Boxes
         {
             return $"{TruckId}  {Name}";
         }

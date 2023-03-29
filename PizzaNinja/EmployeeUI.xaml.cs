@@ -26,28 +26,25 @@ namespace PizzaNinja
     /// </summary>
     public partial class EmployeeUI : Window
     {
-        private IConnectionFactory conn;
-        private UnitOfWork uow;
-        private Employee _employee;
-        private ObservableCollection<Truck> trucks;
+        private IConnectionFactory conn; // Used to connect to DB
+        private UnitOfWork uow; // Contains repos to retrive and maipulate data in the DB
+        private Employee _employee; // Contains data about current user
         public EmployeeUI(Employee employee)
         {
             conn = new DatabaseConnectionFactory();
             uow = new UnitOfWork(conn);
             _employee = employee;
             InitializeComponent();
-            trucks = new ObservableCollection<Truck>();
-            TruckBox.ItemsSource = trucks;
         }
 
-        private async void TruckBox_Initialized(object sender, EventArgs e)
+        private async void TruckBox_Initialized(object sender, EventArgs e) //Populates ComboBox with all trucks in the DB
         {       
             foreach (Truck t in new ObservableCollection<Truck>(await Task.Run(() => uow.Trucks.GetAllAsync().Result)))
             {
-                trucks.Add(t);
+                TruckBox.Items.Add(t);
             }
         }
-        public async void RefreshList()
+        public async void RefreshList()  //Refresh list of trucks in the ComboBox
         {
             JobsDisplay.Items.Clear();
 
@@ -56,7 +53,7 @@ namespace PizzaNinja
                 JobsDisplay.Items.Add(j);
             }
         }
-        private async void TruckBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void TruckBox_SelectionChanged(object sender, SelectionChangedEventArgs e)  //Displays list of jobs in the DataGrid based on selected truck
         {
             JobsDisplay.Items.Clear();
             Truck truck = (Truck)TruckBox.SelectedItem;
@@ -66,7 +63,7 @@ namespace PizzaNinja
                 JobsDisplay.Items.Add(j);
             }
         }
-        private void JobButton_Click(object sender, RoutedEventArgs e)
+        private void JobButton_Click(object sender, RoutedEventArgs e)  //Load the Job View, used to complete a job
         {
             Job job = (Job)JobsDisplay.SelectedItem;
             Truck truck = (Truck)TruckBox.SelectedItem;
@@ -82,7 +79,7 @@ namespace PizzaNinja
         }
         private void MinimizeButton_Click(object sender, RoutedEventArgs e)
         {
-            WindowState |= WindowState.Minimized;
+            WindowState = WindowState.Minimized;
         }
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {

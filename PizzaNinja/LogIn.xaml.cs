@@ -22,8 +22,8 @@ namespace PizzaNinja
 {
     public partial class LogIn : Window
     {
-        private IConnectionFactory conn;
-        private UnitOfWork uow;
+        private IConnectionFactory conn; // Connects to DB
+        private UnitOfWork uow; // Contains Repos to manipulate and retrieve data from DB
         public LogIn()
         {
             conn = new DatabaseConnectionFactory();
@@ -34,39 +34,41 @@ namespace PizzaNinja
         {
             string username = UsernameBox.Text;
             string password = PasswordBox.Password;
-            var userKey =  await Task.Run(() => uow.Employees.GetUsernameAsync(username).Result);
-            var passwordKey = await Task.Run(() => uow.Employees.GetPasswordAsync(password).Result);
 
-            if(username == userKey && password == passwordKey)
+            var emp = await Task.Run(() => uow.Employees.GetEmployeeByUsernameAsync(username)); // Get Employee
+
+            var userKey =  await Task.Run(() => uow.Employees.GetUsernameAsync(username).Result); // Get username
+            var passwordKey = await Task.Run(() => uow.Employees.GetPasswordAsync(emp.Id).Result); // Get password
+
+            if(username == userKey && password == passwordKey) // Checks to see if username and password match 
             {
-                Employee employee = await Task.Run(() => uow.Employees.GetEmployeeByUsernameAsync(username).Result);
+                Employee employee = await Task.Run(() => uow.Employees.GetEmployeeByUsernameAsync(username).Result); // if they match retreive the user data
 
-                if (employee.IsAdmin) 
+                if (employee.IsAdmin) // if user is an Admin, load AdminUI
                 {
                     AdminUI adminUI = new AdminUI(employee); 
                     adminUI.Show();
                     this.Close();
                 }
-                else 
+                else // if user is not an Admin, load EmployeeUI
                 {
                     EmployeeUI employeeUI = new EmployeeUI(employee);
                     employeeUI.Show();
                     this.Close();
                 }                
             }
-            else
+            else // if username and password do not match, send error message
             {
                 string mes = "Username and Password did not match.";
                 Message message = new Message(mes);
                 message.Show();
-                //MessageBox.Show("Username and Password did not match");
             }
         }
-        private void PasswordBox_GotFocus(object sender, RoutedEventArgs e)
+        private void PasswordBox_GotFocus(object sender, RoutedEventArgs e) // removes placeholder text when clicked or tabbed to
         {           
             PasswordBox.Password = string.Empty;
         }
-        private void UsernameBox_GotFocus(object sender, RoutedEventArgs e)
+        private void UsernameBox_GotFocus(object sender, RoutedEventArgs e)  // removes placeholder text when clicked or tabbed to
         {
             UsernameBox.Text= string.Empty;
         }

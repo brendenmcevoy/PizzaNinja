@@ -17,7 +17,7 @@ namespace PN.DB.Repository
             _connectionFactory = Conn;
         }
 
-        public async Task<int> AddAsync(Truck entity)
+        public async Task<int> AddAsync(Truck entity) // Adds a truck to the DB
         {
             using (var connection = _connectionFactory.GetConnection)
             {
@@ -28,7 +28,7 @@ namespace PN.DB.Repository
             }
         }
 
-        public async Task<int> DeleteAsync(int id)
+        public async Task<int> DeleteAsync(int id) // Deletes a truck from the DB
         {
             using (var connection = _connectionFactory.GetConnection)
             {
@@ -39,7 +39,7 @@ namespace PN.DB.Repository
             }
         }
 
-        public async Task<List<Truck>> GetAllAsync()
+        public async Task<List<Truck>> GetAllAsync() // Get all trucks from DB
         {
             using (var connection = _connectionFactory.GetConnection)
             {
@@ -50,7 +50,7 @@ namespace PN.DB.Repository
             }
         }
 
-        public async Task<Truck> GetByIdAsync(int id)
+        public async Task<Truck> GetByIdAsync(int id) // Gets a truck with matching truckID from the DB
         {
             using (var connection = _connectionFactory.GetConnection)
             {
@@ -61,7 +61,7 @@ namespace PN.DB.Repository
             }
         }
 
-        public async Task<int> UpdateAsync(Truck entity)
+        public async Task<int> UpdateAsync(Truck entity) // Updates a truck in the DB
         {
             using (var connection = _connectionFactory.GetConnection)
             {
