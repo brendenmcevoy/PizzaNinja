@@ -135,6 +135,7 @@
                          Height="200"
                          FontFamily="/Fonts/CarterOne.ttf #Carter One"
                          TextWrapping="Wrap"
+                         IsReadOnly="True"
                          Text="{Binding Description}"/>
             </Border>
 

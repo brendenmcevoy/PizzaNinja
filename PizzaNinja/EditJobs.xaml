@@ -108,7 +108,14 @@
                     </DataGridTemplateColumn>
                     <DataGridTextColumn Header="Id" Width="50" Binding="{Binding JobId}"/>
                     <DataGridTextColumn Header="Name" Width="80" Binding="{Binding Name}"/>
-                    <DataGridTextColumn Header="Description" Width="170" Binding="{Binding Description}"/>
+                    <DataGridTextColumn Header="Description" Width="170" Binding="{Binding Description}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style>
+                                <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
                     <DataGridTextColumn Header="TruckId" Width="*" Binding="{Binding TruckId}"/>
                 </DataGrid.Columns>
                 <DataGrid.RowStyle>

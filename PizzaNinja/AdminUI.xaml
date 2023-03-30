@@ -248,7 +248,14 @@
                     </DataGridTemplateColumn>
                     <DataGridTextColumn Header="Job Id" Width="50" Binding="{Binding JobId}" />
                     <DataGridTextColumn Header="Name" Width="150" Binding="{Binding Name}"/>
-                    <DataGridTextColumn Header="Description" Width="*" Binding="{Binding Description}"/>
+                    <DataGridTextColumn Header="Description" Width="*" Binding="{Binding Description}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style>
+                                <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
                 </DataGrid.Columns>
                 <DataGrid.RowStyle>
                     <Style TargetType="DataGridRow">
@@ -262,7 +269,7 @@
                       Grid.RowSpan="3"
                       Grid.Column="1"
                       Grid.ColumnSpan="7"
-                      Width="700"
+                      Width="705"
                       Height="300"
                       FontFamily="/Fonts/CarterOne.ttf #Carter One"
                       HorizontalAlignment="Left"
@@ -287,8 +294,23 @@
                     <DataGridTextColumn Header="Job Id" Width="50" Binding="{Binding JobId}"/>
                     <DataGridTextColumn Header="Truck Id" Width="55" Binding="{Binding TruckId}"/>
                     <DataGridTextColumn Header="Employee Id" Width="80" Binding="{Binding EmployeeId}"/>
-                    <DataGridTextColumn Header="Description" Width="350" Binding="{Binding Description}"/>
-                    <DataGridTextColumn Header="Notes" Width="160" Binding="{Binding Notes}"/>
+                    <DataGridTextColumn Header="Description" Width="210" Binding="{Binding Description}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style>
+                                <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Notes" Width="205" Binding="{Binding Notes}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style>
+                                <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Date Completed" Width="*" Binding="{Binding Date}"/>
                 </DataGrid.Columns>
                 <DataGrid.RowStyle>
                     <Style TargetType="DataGridRow">

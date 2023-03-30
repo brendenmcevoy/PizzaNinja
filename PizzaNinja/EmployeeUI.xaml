@@ -92,6 +92,7 @@
                     </Style>
                 </ComboBox.ItemContainerStyle>
             </ComboBox>
+            
             <DataGrid x:Name="JobsDisplay"
                       Grid.Row="2"
                       Grid.RowSpan="3" 
@@ -109,7 +110,8 @@
                       CanUserResizeColumns="False"
                       CanUserResizeRows="False"
                       SelectionMode="Single"
-                      IsReadOnly="True">
+                      IsReadOnly="True"
+                      datac>
                 <DataGrid.Resources>
                     <Style TargetType="{x:Type DataGridColumnHeader}">
                         <Setter Property="BorderThickness" Value="0,0,1,2"/>
@@ -130,7 +132,14 @@
                     </DataGridTemplateColumn>
                     <DataGridTextColumn Header="Job Id" Width="50" Binding="{Binding JobId}"/>
                     <DataGridTextColumn Header="Name" Width="150" Binding="{Binding Name}"/>
-                    <DataGridTextColumn Header="Description" Width="*" Binding="{Binding Description}"/>
+                    <DataGridTextColumn Header="Description" Width="*" Binding="{Binding Description}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style>
+                                <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
                 </DataGrid.Columns>
                 <DataGrid.RowStyle>
                     <Style TargetType="DataGridRow">
